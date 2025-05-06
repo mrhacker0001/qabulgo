@@ -1,0 +1,66 @@
+.Navbar {
+    width: 100dvw;
+    height: 8dvh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(44, 44, 44);
+    padding: 0 1dvw;
+}
+
+.Navbar img {
+    width: 6dvw;
+    border-radius: 5px;
+}
+
+.texts {
+    display: flex;
+    align-items: center;
+    gap: 2dvw;
+}
+
+.texts span {
+    color: #fff;
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+.texts a {
+    font-weight: 300;
+    text-decoration: none;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 2dvw;
+}
+
+
+
+.buttons button {
+    width: 8dvw;
+    height: 4dvh;
+    border-radius: 9px;
+    background: none;
+    border: none;
+    border: 1px solid #fff;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.buttons select {
+    width: 3dvw;
+    height: 3dvh;
+    background: none;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    color: #fff;
+    font-family: sans-serif;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+}
+

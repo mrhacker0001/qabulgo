@@ -1,0 +1,35 @@
+{
+    "uz": {
+        "yordam": "Yordam",
+        "buyurtma": "Buyurtma berish",
+        "register": "Roʻyxatdan oʻtish",
+        "login": "Tizimga kirish",
+        "narx": "Narxi",
+        "vaqt": "Davomiyligi",
+        "ism": "Ism",
+        "telefon": "Telefon raqam",
+        "vaqti":"Vaqt"
+    },
+    "en": {
+        "yordam": "Support",
+        "buyurtma": "Booking",
+        "register": "Register",
+        "login": "Log in",
+        "narx": "Price",
+        "vaqt": "Duration",
+        "ism": "Name",
+        "telefon": "Telephone number",
+        "vaqti":"Time"
+    },
+    "ru": {
+        "yordam": "Помощь",
+        "buyurtma": "Бронирование",
+        "register": "Зарегистрироваться",
+        "login": "Авторизоваться",
+        "narx": "Цена",
+        "vaqt": "Продолжительность",
+        "ism":"Имя",
+        "telefon":"Номер телефона",
+        "vaqti":"Время"
+    }
+}
