@@ -4,32 +4,47 @@
         "buyurtma": "Buyurtma berish",
         "register": "Roʻyxatdan oʻtish",
         "login": "Tizimga kirish",
-        "narx": "Narxi",
-        "vaqt": "Davomiyligi",
+        "narx": "Narxi (so'm)",
+        "vaqt": "Davomiyligi (daq)",
         "ism": "Ism",
         "telefon": "Telefon raqam",
-        "vaqti":"Vaqt"
+        "vaqti": "Vaqtni tanlang",
+        "place": "Ishxona nomi:",
+        "yangi": "Yangi xizmat qo'shish",
+        "nom": "Xizmat nomi",
+        "joylashuv":"Joylashuv",
+        "qoshish":"Qo'shish"
     },
     "en": {
         "yordam": "Support",
         "buyurtma": "Booking",
         "register": "Register",
         "login": "Log in",
-        "narx": "Price",
-        "vaqt": "Duration",
+        "narx": "Price (so'm)",
+        "vaqt": "Duration (daq)",
         "ism": "Name",
         "telefon": "Telephone number",
-        "vaqti":"Time"
+        "vaqti": "Select a time",
+        "place": "Workplace:",
+        "yangi": "Add new service",
+        "nom": "Service name",
+        "joylashuv":"Location",
+        "qoshish":"Add"
     },
     "ru": {
         "yordam": "Помощь",
         "buyurtma": "Бронирование",
         "register": "Зарегистрироваться",
         "login": "Авторизоваться",
-        "narx": "Цена",
+        "narx": "Цена (so'm)",
         "vaqt": "Продолжительность",
-        "ism":"Имя",
-        "telefon":"Номер телефона",
-        "vaqti":"Время"
+        "ism": "Имя",
+        "telefon": "Номер телефона",
+        "vaqti": "Выберите время (daq)",
+        "place": "Рабочее место",
+        "yangi": "Добавить новую услугу",
+        "nom": "Название услуги",
+        "joylashuv":"Расположение",
+        "qoshish":"Добавлять"
     }
 }
