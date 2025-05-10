@@ -12,8 +12,16 @@
         "place": "Ishxona nomi:",
         "yangi": "Yangi xizmat qo'shish",
         "nom": "Xizmat nomi",
-        "joylashuv":"Joylashuv",
-        "qoshish":"Qo'shish"
+        "joylashuv": "Joylashuv",
+        "qoshish": "Qo'shish",
+        "masalan": "Masalan: Dushanba 10:30 - 11:00",
+        "dushanba": "Yangi vaqt qo'shish",
+        "barcha_buyurtmalar": "Barcha buyurtmalar",
+        "buyurtmalar_yoq": "Hozircha buyurtmalar yo‘q",
+        "xizmat": "Xizmat",
+        "manzil": "Manzil",
+        "ochirish": "O‘chirish",
+        "faqat_bugun": "Faqat bugungi buyurtmalar"
     },
     "en": {
         "yordam": "Support",
@@ -28,8 +36,16 @@
         "place": "Workplace:",
         "yangi": "Add new service",
         "nom": "Service name",
-        "joylashuv":"Location",
-        "qoshish":"Add"
+        "joylashuv": "Location",
+        "qoshish": "Add",
+        "masalan": "For example: Monday 10:30 - 11:00",
+        "dushanba": "Add new time",
+        "barcha_buyurtmalar": "All bookings",
+        "buyurtmalar_yoq": "No orders yet.",
+        "xizmat": "Service",
+        "manzil": "Location",
+        "ochirish": "Delete",
+        "faqat_bugun": "Today's orders only"
     },
     "ru": {
         "yordam": "Помощь",
@@ -44,7 +60,15 @@
         "place": "Рабочее место",
         "yangi": "Добавить новую услугу",
         "nom": "Название услуги",
-        "joylashuv":"Расположение",
-        "qoshish":"Добавлять"
+        "joylashuv": "Расположение",
+        "qoshish": "Добавлять",
+        "masalan": "Например: понедельник 10:30 - 11:00",
+        "dushanba": "Добавить новое время",
+        "barcha_buyurtmalar": "Все бронирования",
+        "buyurtmalar_yoq": "Заказов пока нет.",
+        "xizmat": "Услуга",
+        "manzil": "Расположение",
+        "ochirish": "Удалить",
+        "faqat_bugun": "Только сегодняшние заказы"
     }
 }

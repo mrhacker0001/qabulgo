@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams } from "react-router-dom";
-import { doc, getDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import "./BookingPage.css";
 import { useStoreState } from "../Redux/selector";
@@ -30,6 +30,22 @@ function BookingPage() {
       }
     };
     fetchService();
+  }, [id]);
+
+  const [times, setTimes] = useState([]);
+
+  useEffect(() => {
+    const fetchTimes = async () => {
+      const q = query(collection(db, "serviceTimes"), where("serviceId", "==", id));
+      const querySnapshot = await getDocs(q);
+      const timeList = [];
+      querySnapshot.forEach(doc => {
+        timeList.push(doc.data().timeSlot);
+      });
+      setTimes(timeList);
+    };
+
+    if (id) fetchTimes();
   }, [id]);
 
   const handleBooking = async () => {
@@ -82,11 +98,12 @@ function BookingPage() {
           <label>
             {langData.vaqti}
             <select value={time} onChange={e => setTime(e.target.value)}>
-              <option value="">-- {langData.vaqti}--</option>
-              <option value="26-aprel 10:30">26-aprel 10:30</option>
-              <option value="26-aprel 12:30">26-aprel 12:30</option>
-              {/* Keyin admin paneldan kiritiladigan vaqtlar bo‘ladi */}
+              <option value="">-- Vaqt tanlang --</option>
+              {times.map((t, idx) => (
+                <option key={idx} value={t}>{t}</option>
+              ))}
             </select>
+
           </label>
           <button onClick={handleBooking}>{langData.buyurtma}</button>
         </div>

@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from 'react';
-import { collection, addDoc } from "firebase/firestore";
+import React, { useMemo, useState, useEffect } from 'react';
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../Components/firebase";
 import "./AdminServicesPage.css";
 import { useStoreState } from "../Redux/selector";
 import locale from "../localization/locale.json";
+import AdminAddTime from './AdminAddTime';
 
 function AdminServicesPage() {
+  const [services, setServices] = useState([]); // ✅ SERVICES STATE
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [duration, setDuration] = useState('');
@@ -14,6 +16,20 @@ function AdminServicesPage() {
   const states = useStoreState();
   const langData = useMemo(() => locale[states.lang], [states.lang]);
 
+  // ✅ FIRESTORE'DAN SERVICES NI YUKLASH
+  useEffect(() => {
+    const fetchServices = async () => {
+      const snapshot = await getDocs(collection(db, "services"));
+      const servicesData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setServices(servicesData);
+    };
+    fetchServices();
+  }, []);
+
+  // ✅ XIZMAT QO‘SHISH
   const handleAddService = async () => {
     if (!name || !price || !duration || !location || !workplace) {
       alert("Iltimos, barcha maydonlarni to‘ldiring.");
@@ -21,7 +37,7 @@ function AdminServicesPage() {
     }
 
     try {
-      await addDoc(collection(db, "services"), {
+      const docRef = await addDoc(collection(db, "services"), {
         name,
         price: Number(price),
         duration: Number(duration),
@@ -29,7 +45,10 @@ function AdminServicesPage() {
         workplace,
       });
 
-      // maydonlarni tozalaymiz
+      // Yangi qo‘shilgan xizmatni state ga qo‘shamiz
+      setServices(prev => [...prev, { id: docRef.id, name, price, duration, location, workplace }]);
+
+      // Maydonlarni tozalaymiz
       setName('');
       setPrice('');
       setDuration('');
@@ -75,7 +94,18 @@ function AdminServicesPage() {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
         />
+
         <button onClick={handleAddService}>{langData.qoshish}</button>
+      </div>
+
+      <hr />
+
+      <div >
+        {services.map(service => (
+          <div key={service.id} className="admin-service">
+            <AdminAddTime serviceId={service.id} />
+          </div>
+        ))}
       </div>
     </div>
   );

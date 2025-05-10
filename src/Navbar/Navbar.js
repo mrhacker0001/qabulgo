@@ -19,7 +19,7 @@ function Navbar() {
             <NavLink to='/'><img src={logo} alt="" /></NavLink>
             <div className="texts">
                 <NavLink to='/Support'><span>{langData.yordam}</span></NavLink>
-                <NavLink to='/AdminServicesPage'><span>{langData.buyurtma}</span></NavLink>
+                <NavLink to='/AdminBookingsPage'><span>{langData.buyurtma}</span></NavLink>
             </div>
 
             <div className="buttons">
