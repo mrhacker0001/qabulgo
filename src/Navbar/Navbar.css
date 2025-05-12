@@ -51,6 +51,11 @@
     cursor: pointer;
 }
 
+.buttons button a {
+    text-decoration: none;
+    color: #fff;
+}
+
 .buttons select {
     width: 3dvw;
     height: 3dvh;
@@ -63,4 +68,3 @@
     font-size: 14px;
     padding: 0;
 }
-

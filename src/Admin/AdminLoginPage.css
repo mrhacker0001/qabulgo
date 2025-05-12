@@ -1,0 +1,22 @@
+.AdminLoginPage,
+.AdminSignupPage {
+    width: 100dvw;
+    height: 100dvh;
+    background-color: #dadada;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form {
+    width: 30px;
+    height: 70dvh;
+    border: 2px solid #333333;
+    border-radius: 20px;
+}

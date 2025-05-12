@@ -6,6 +6,9 @@ import { setLang } from "../Redux/lang";
 import logo from "../assets/qabulgo1.png"
 import "./Navbar.css"
 import { NavLink } from 'react-router-dom'
+import { signOut } from "firebase/auth";
+import { auth } from "../Components/firebase";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,6 +16,18 @@ function Navbar() {
     const states = useStoreState();
     const langData = useMemo(() => locale[states.lang], [states.lang]);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+    const handleLogout = () => {
+        signOut(auth).then(() => {
+            alert("Tizimdan chiqdingiz");
+            navigate("/AdminSignupPage");
+
+        }).catch(err => {
+            console.error("Logout xatolik:", err);
+        });
+    };
 
     return (
         <div className='Navbar'>
@@ -32,8 +47,9 @@ function Navbar() {
                     <option value="en">EN</option>
                     <option value="ru">RU</option>
                 </select>
-                <button>{langData.register}</button>
-                <button>{langData.login}</button>
+                <button> <NavLink to="/AdminSignupPage">{langData.register}</NavLink></button>
+                <button><NavLink to="/AdminLoginPage">{langData.login}</NavLink> </button>
+                <button onClick={handleLogout}>{langData.chiqish}</button>
             </div>
 
         </div>

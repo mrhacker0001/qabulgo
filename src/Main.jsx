@@ -8,6 +8,7 @@ import AdminServicesPage from './Admin/AdminServicesPage'
 import DashboardPage from './Admin/DashboardPage'
 import BookingPage from './Components/BookingPage'
 import Support from './Components/Support'
+import AdminSignupPage from './Admin/AdminSignupPage'
 
 
 function Main() {
@@ -17,6 +18,7 @@ function Main() {
                 <Route path='/' element={<HomePage />} />
                 <Route path='/AdminBookingsPage' element={<AdminBookingsPage />} />
                 <Route path='/AdminLoginPage' element={<AdminLoginPage />} />
+                <Route path='/AdminSignupPage' element={<AdminSignupPage />} />
                 <Route path='/AdminSchedulePage' element={<AdminSchedulePage />} />
                 <Route path='/AdminServicesPage' element={<AdminServicesPage />} />
                 <Route path='/DashboardPage' element={<DashboardPage />} />

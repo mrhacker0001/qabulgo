@@ -21,7 +21,14 @@
         "xizmat": "Xizmat",
         "manzil": "Manzil",
         "ochirish": "O‘chirish",
-        "faqat_bugun": "Faqat bugungi buyurtmalar"
+        "faqat_bugun": "Faqat bugungi buyurtmalar",
+        "admin_royxat": "Admin ro‘yxatdan o‘tish",
+        "admin_kirish": "Admin kirish",
+        "email": "Email manzil",
+        "parol": "Parol",
+        "royxatdan_otish": "Ro‘yxatdan o‘tish",
+        "kirish": "Kirish",
+        "chiqish": "Chiqish"
     },
     "en": {
         "yordam": "Support",
@@ -45,7 +52,14 @@
         "xizmat": "Service",
         "manzil": "Location",
         "ochirish": "Delete",
-        "faqat_bugun": "Today's orders only"
+        "faqat_bugun": "Today's orders only",
+        "admin_royxat": "Admin registration",
+        "admin_kirish": "Admin login",
+        "email": "Email address",
+        "parol": "Password",
+        "royxatdan_otish": "Register",
+        "kirish": "Login",
+        "chiqish": "Log out"
     },
     "ru": {
         "yordam": "Помощь",
@@ -69,6 +83,13 @@
         "xizmat": "Услуга",
         "manzil": "Расположение",
         "ochirish": "Удалить",
-        "faqat_bugun": "Только сегодняшние заказы"
+        "faqat_bugun": "Только сегодняшние заказы",
+        "admin_royxat": "Регистрация администратора",
+        "admin_kirish": "Вход администратора",
+        "email": "Электронная почта",
+        "parol": "Пароль",
+        "royxatdan_otish": "Зарегистрироваться",
+        "kirish": "Войти",
+        "chiqish": "Выйти"
     }
 }
