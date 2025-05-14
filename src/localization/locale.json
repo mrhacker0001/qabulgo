@@ -28,7 +28,8 @@
         "parol": "Parol",
         "royxatdan_otish": "Ro‘yxatdan o‘tish",
         "kirish": "Kirish",
-        "chiqish": "Chiqish"
+        "chiqish": "Chiqish",
+        "profil": "Profil"
     },
     "en": {
         "yordam": "Support",
@@ -59,6 +60,7 @@
         "parol": "Password",
         "royxatdan_otish": "Register",
         "kirish": "Login",
+        "profil": "Profile",
         "chiqish": "Log out"
     },
     "ru": {
@@ -90,6 +92,7 @@
         "parol": "Пароль",
         "royxatdan_otish": "Зарегистрироваться",
         "kirish": "Войти",
-        "chiqish": "Выйти"
+        "chiqish": "Выйти",
+        "profil": "Профиль"
     }
 }

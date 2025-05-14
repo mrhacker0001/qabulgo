@@ -9,6 +9,8 @@ import DashboardPage from './Admin/DashboardPage'
 import BookingPage from './Components/BookingPage'
 import Support from './Components/Support'
 import AdminSignupPage from './Admin/AdminSignupPage'
+import AdminRegisterPage from './Admin/ AdminRegisterPage'
+import ProfilePage from './Components/ProfilePage'
 
 
 function Main() {
@@ -24,6 +26,9 @@ function Main() {
                 <Route path='/DashboardPage' element={<DashboardPage />} />
                 <Route path='/BookingPage/:id' element={<BookingPage />} />
                 <Route path='/Support' element={<Support />} />
+                <Route path='/AdminRegisterPage' element={<AdminRegisterPage />} />
+                <Route path='/ProfilePage' element={<ProfilePage />} />
+
             </Routes>
         </div>
     )

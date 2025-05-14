@@ -1,0 +1,25 @@
+.admin-navbar {
+    background-color: #222;
+    padding: 15px;
+}
+
+.admin-navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.admin-navbar a,
+.admin-navbar button {
+    color: #fff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.admin-navbar button:hover,
+.admin-navbar a:hover {
+    text-decoration: underline;
+}

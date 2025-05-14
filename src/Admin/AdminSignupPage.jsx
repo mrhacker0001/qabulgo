@@ -20,7 +20,7 @@ function AdminSignupPage() {
             alert("Ro‘yxatdan muvaffaqiyatli o‘tdingiz!");
             setEmail('');
             setPassword('');
-            navigate("/AdminServicesPage");
+            navigate("/");
         } catch (error) {
             console.error("Ro‘yxatdan o‘tishda xatolik:", error);
             alert("Xatolik: " + error.message);

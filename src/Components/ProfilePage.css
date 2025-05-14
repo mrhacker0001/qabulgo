@@ -1,0 +1,16 @@
+.ProfilePage {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.booking-card {
+    background: #f3f3f3;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.booking-card.completed {
+    background: #e0ffe0;
+}

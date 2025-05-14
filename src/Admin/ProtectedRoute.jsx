@@ -9,7 +9,7 @@ function ProtectedRoute({ children }) {
     if (loading) return <p>Yuklanmoqda...</p>;
 
     if (!user) {
-        return <Navigate to="/admin-login" replace />;
+        return <Navigate to="/AdminLoginPage" replace />;
     }
 
     return children;

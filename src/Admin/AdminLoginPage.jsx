@@ -20,7 +20,7 @@ function AdminLoginPage() {
       alert("Tizimga muvaffaqiyatli kirdingiz!");
       setEmail('');
       setPassword('');
-      navigate("/AdminServicesPage");
+      navigate("/");
 
     } catch (error) {
       console.error("Kirishda xatolik:", error);
