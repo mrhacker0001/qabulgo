@@ -14,7 +14,6 @@ function BookingPage() {
   const [service, setService] = useState(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [time, setTime] = useState("");
   const states = useStoreState();
   const langData = useMemo(() => locale[states.lang], [states.lang]);
 
@@ -35,7 +34,6 @@ function BookingPage() {
     fetchService();
   }, [id]);
 
-  const [times, setTimes] = useState([]);
 
   useEffect(() => {
     const fetchTimes = async () => {
@@ -45,14 +43,13 @@ function BookingPage() {
       querySnapshot.forEach(doc => {
         timeList.push(doc.data().timeSlot);
       });
-      setTimes(timeList);
     };
 
     if (id) fetchTimes();
   }, [id]);
 
   const handleBooking = async () => {
-    if (!name || !phone || !time) return alert("Iltimos, barcha maydonlarni to‘ldiring");
+    if (!name || !phone) return alert("Iltimos, barcha maydonlarni to‘ldiring");
 
     const user = auth.currentUser;
     if (!user) {
@@ -65,7 +62,6 @@ function BookingPage() {
         userId: user.uid,
         name,
         phone,
-        time,
         serviceId: id,
         serviceName: service?.name || "",
         workplace: service?.workplace || "",
@@ -75,7 +71,7 @@ function BookingPage() {
       });
 
       alert("Buyurtma muvaffaqiyatli yuborildi!");
-      setName(""); setPhone(""); setTime("");
+      setName(""); setPhone("");
     } catch (err) {
       console.error("Xatolik:", err);
       alert("Buyurtma yuborishda xatolik yuz berdi");
@@ -105,16 +101,6 @@ function BookingPage() {
           <label>
             {langData.telefon}
             <input value={phone} onChange={e => setPhone(e.target.value)} type="text" />
-          </label>
-          <label>
-            {langData.vaqti}
-            <select value={time} onChange={e => setTime(e.target.value)}>
-              <option value="">-- Vaqt tanlang --</option>
-              {times.map((t, idx) => (
-                <option key={idx} value={t}>{t}</option>
-              ))}
-            </select>
-
           </label>
           <button onClick={handleBooking}>{langData.buyurtma}</button>
         </div>
