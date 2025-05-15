@@ -1,19 +1,18 @@
 .AdminServicesPage {
     width: 100dvw;
-    height: 126dvh;
-    padding-top: 50dvh;
+    height: 120dvh;
+    /* padding-top: 50dvh; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #dad3d3;
     gap: 8dvh;
-    overflow: hidden;
 }
 
 .form {
     width: 25dvw;
-    height: 60dvh;
+    height: 70dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
