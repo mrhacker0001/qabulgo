@@ -29,7 +29,9 @@
         "royxatdan_otish": "Ro‘yxatdan o‘tish",
         "kirish": "Kirish",
         "chiqish": "Chiqish",
-        "profil": "Profil"
+        "profil": "Profil",
+        "bosh_vaqtlar": "Bo‘sh vaqtlar",
+        "vaqt_yoq": "Hali vaqt qo‘shilmagan"
     },
     "en": {
         "yordam": "Support",
@@ -61,7 +63,9 @@
         "royxatdan_otish": "Register",
         "kirish": "Login",
         "profil": "Profile",
-        "chiqish": "Log out"
+        "chiqish": "Log out",
+        "bosh_vaqtlar": "Свободное время",
+        "vaqt_yoq": "Время пока не добавлено"
     },
     "ru": {
         "yordam": "Помощь",
@@ -93,6 +97,8 @@
         "royxatdan_otish": "Зарегистрироваться",
         "kirish": "Войти",
         "chiqish": "Выйти",
-        "profil": "Профиль"
+        "profil": "Профиль",
+        "bosh_vaqtlar": "Available Times",
+        "vaqt_yoq": "No times added yet"
     }
 }
