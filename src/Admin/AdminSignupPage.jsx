@@ -30,7 +30,7 @@ function AdminSignupPage() {
     return (
         <div className="AdminSignupPage">
             <div className="form">
-                <h2>{langData.admin_royxat}</h2>
+                <h2>{langData.royxatdan_otish}</h2>
                 <input
                     type="email"
                     placeholder={langData.email}

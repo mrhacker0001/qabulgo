@@ -55,7 +55,10 @@ function ProfilePage() {
                     activeBookings.map((booking, index) => (
                         <div key={index} className="booking-card">
                             <p>Xizmat: {booking.serviceName}</p>
-                            <p>Sana: {booking.date}</p>
+                            <p>Band qilingan vaqt: {booking.time}</p>
+                            <p>Band qilingan joy: {booking.workplace}</p>
+                            <br />
+                            <p><strong>Buyurtma berilgan sana:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
                         </div>
                     ))
                 }
@@ -65,7 +68,10 @@ function ProfilePage() {
                     completedBookings.map((booking, index) => (
                         <div key={index} className="booking-card completed">
                             <p>Xizmat: {booking.serviceName}</p>
-                            <p>Sana: {booking.date}</p>
+                            <p>Band qilingan vaqt: {booking.time}</p>
+                            <p>Band qilingan joy: {booking.workplace}</p>
+                            <br />
+                            <p><strong>Sana:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
                         </div>
                     ))
                 }

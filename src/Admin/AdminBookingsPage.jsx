@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { collection, getDocs, doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../Components/firebase';
 import { useStoreState } from "../Redux/selector";
+
 import locale from "../localization/locale.json";
 import './AdminBookingsPage.css';
 
@@ -52,6 +53,19 @@ function AdminBookingsPage() {
     }
   };
 
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await updateDoc(doc(db, "bookings", id), { status: newStatus });
+      setBookings(prev =>
+        prev.map(b => (b.id === id ? { ...b, status: newStatus } : b))
+      );
+    } catch (err) {
+      console.error("Statusni o‘zgartirishda xatolik:", err);
+      alert("Statusni o‘zgartirishda xatolik yuz berdi");
+    }
+  };
+
+
   const filteredBookings = useMemo(() => {
     if (!filterToday) return bookings;
 
@@ -84,6 +98,7 @@ function AdminBookingsPage() {
               <th>{langData.vaqti}</th>
               <th>{langData.xizmat}</th>
               <th>{langData.manzil}</th>
+              <th>Status</th>
               <th>{langData.ochirish}</th>
             </tr>
           </thead>
@@ -99,6 +114,15 @@ function AdminBookingsPage() {
                   <td>{service?.name || '...'}</td>
                   <td>{service?.workplace}, {service?.location}</td>
                   <td>
+                    <span className={`status ${booking.status || ''}`}>
+                      {booking.status || '...'}
+                    </span>
+                    <div className="status-buttons">
+                      <button onClick={() => handleStatusChange(booking.id, "completed")}>✅ finished</button>
+                      <button onClick={() => handleStatusChange(booking.id, "cancelled")}>❌ cancelled</button>
+                    </div>
+                  </td>
+                  <td>
                     <button onClick={() => handleDelete(booking.id)}>
                       {langData.ochirish}
                     </button>
@@ -107,6 +131,7 @@ function AdminBookingsPage() {
               );
             })}
           </tbody>
+
         </table>
       )}
     </div>

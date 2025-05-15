@@ -45,3 +45,19 @@
 .bookings-table td button:hover {
     background-color: #c82333;
 }
+
+.status-buttons button {
+    margin: 2px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.status.completed {
+    color: green;
+    font-weight: bold;
+}
+
+.status.cancelled {
+    color: red;
+    font-weight: bold;
+}

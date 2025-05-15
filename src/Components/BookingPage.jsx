@@ -5,6 +5,9 @@ import { db } from "./firebase";
 import "./BookingPage.css";
 import { useStoreState } from "../Redux/selector";
 import locale from "../localization/locale.json";
+import { auth } from "./firebase";
+
+
 
 function BookingPage() {
   const { id } = useParams();
@@ -51,8 +54,15 @@ function BookingPage() {
   const handleBooking = async () => {
     if (!name || !phone || !time) return alert("Iltimos, barcha maydonlarni to‘ldiring");
 
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Buyurtma berish uchun tizimga kiring");
+      return;
+    }
+
     try {
       await addDoc(collection(db, "bookings"), {
+        userId: user.uid,
         name,
         phone,
         time,
@@ -60,6 +70,7 @@ function BookingPage() {
         serviceName: service?.name || "",
         workplace: service?.workplace || "",
         location: service?.location || "",
+        status: "active", // status qo‘shiladi
         createdAt: serverTimestamp(),
       });
 
@@ -82,7 +93,7 @@ function BookingPage() {
             <p><strong>{langData.narx}:</strong> {service.price} so‘m</p>
             <p><strong>{langData.vaqt}:</strong> {service.duration} daqiqa</p>
             <p><strong>{langData.place}</strong> {service.workplace}</p>
-            <p><strong>Lokatsiya:</strong> {service.location}</p>
+            <p><strong>{langData.joylashuv}</strong> {service.location}</p>
           </div>
         )}
 

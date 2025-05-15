@@ -31,7 +31,7 @@ function AdminLoginPage() {
   return (
     <div className="AdminLoginPage">
       <div className="form">
-        <h2>{langData.admin_kirish}</h2>
+        <h2>{langData.kirish}</h2>
 
         <input
           type="email"

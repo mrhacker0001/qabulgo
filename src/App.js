@@ -2,11 +2,6 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import Main from './Main';
 import Navbar from './Navbar/Navbar';
-import ProtectedRoute from "./Admin/ProtectedRoute";
-import AdminServicesPage from "./Admin/AdminServicesPage";
-import AdminBookingsPage from "./Admin/AdminBookingsPage";
-import AdminLoginPage from "./Admin/AdminLoginPage";
-import { Routes, Route } from "react-router-dom"; // Buni ham qo‘shish kerak
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "./Components/firebase";
@@ -38,7 +33,6 @@ function App() {
   return (
     <div className="App">
       {isAdmin ? <AdminNavbar setIsAdmin={setIsAdmin} /> : <Navbar />}
-
       <Main />
     </div>
   );

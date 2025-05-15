@@ -28,7 +28,6 @@ function Main() {
                 <Route path='/Support' element={<Support />} />
                 <Route path='/AdminRegisterPage' element={<AdminRegisterPage />} />
                 <Route path='/ProfilePage' element={<ProfilePage />} />
-
             </Routes>
         </div>
     )
