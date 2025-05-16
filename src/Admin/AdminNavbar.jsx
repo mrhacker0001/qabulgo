@@ -11,7 +11,7 @@ function AdminNavbar({ setIsAdmin }) {
     const handleLogout = async () => {
         try {
             await auth.signOut();
-            setIsAdmin(false); // logoutdan keyin navbarni o'zgartirish uchun
+            setIsAdmin(false);
             navigate('/');
         } catch (error) {
             console.error("Chiqishda xatolik:", error);
@@ -23,6 +23,7 @@ function AdminNavbar({ setIsAdmin }) {
             <ul>
                 <li><NavLink to="/AdminServicesPage">Xizmatlar</NavLink></li>
                 <li><NavLink to="/AdminBookingsPage">Buyurtmalar</NavLink></li>
+                <li><NavLink to="/AdminDashboardPage">Bajarilgan buyurtmalar</NavLink></li>
                 <li><button onClick={handleLogout}>Chiqish</button></li>
             </ul>
         </nav>

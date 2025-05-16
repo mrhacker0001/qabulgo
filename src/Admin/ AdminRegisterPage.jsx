@@ -8,10 +8,13 @@ function AdminRegisterPage() {
     const [accessGranted, setAccessGranted] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [region, setRegion] = useState('');
+    const [number, setNumber] = useState('');
+    const [service, setService] = useState('');
 
     const handleSecretSubmit = (e) => {
         e.preventDefault();
-        if (secret === "2222") { // bu faqat siz biladigan maxfiy parol
+        if (secret === "2222") {
             setAccessGranted(true);
         } else {
             alert("Noto‘g‘ri maxfiy parol!");
@@ -20,23 +23,56 @@ function AdminRegisterPage() {
 
     const registerAdmin = async (e) => {
         e.preventDefault();
+
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
             await setDoc(doc(db, 'users', user.uid), {
                 email: user.email,
-                role: 'admin'
+                role: 'admin',
+                region,   // Adminning viloyati
+                service,  // Adminning xizmat turi
+                number,   // Telefon raqami
             });
 
             alert("Admin muvaffaqiyatli ro‘yxatdan o‘tdi");
+
+            // Formani tozalash
             setEmail('');
             setPassword('');
+            setRegion('');
+            setNumber('');
+            setService('');
+
         } catch (error) {
             console.error("Xatolik:", error);
             alert("Xatolik: " + error.message);
         }
     };
+
+    const services = [
+        { name: "quruvchi" },
+        { name: "beauty shop" },
+        { name: "sartarosh" },
+        { name: "santexnik" },
+
+    ]
+
+    const regionname = [
+        { name: "Namangan" },
+        { name: "Andijon" },
+        { name: "Farg'ona" },
+        { name: "Toshkent" },
+        { name: "Xorazm" },
+        { name: "Jizzax" },
+        { name: "Qashqadaryo" },
+        { name: "Surxandaryo" },
+        { name: "Navoiy" },
+        { name: "Samarqand" },
+        { name: "Buxoro" },
+        { name: "Sirdaryo" }
+    ]
 
     return (
         <div className="AdminRegisterPage">
@@ -69,6 +105,28 @@ function AdminRegisterPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+                    <input
+                        type="number"
+                        placeholder="Telefon raqam"
+                        value={number}
+                        onChange={(e) => setNumber(e.target.value)}
+                        required
+                    />
+
+                    <select value={region} onChange={(e) => setRegion(e.target.value)} required>
+                        <option value="">Viloyat tanlang</option>
+                        {regionname.map((item, index) => (
+                            <option key={index} value={item.name}>{item.name}</option>
+                        ))}
+                    </select>
+
+                    <select value={service} onChange={(e) => setService(e.target.value)} required>
+                        <option value="">Xizmat turi</option>
+                        {services.map((item, index) => (
+                            <option key={index} value={item.name}>{item.name}</option>
+                        ))}
+                    </select>
+
                     <button type="submit">Ro‘yxatdan o‘tish</button>
                 </form>
             )}

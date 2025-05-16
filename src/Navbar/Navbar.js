@@ -32,7 +32,7 @@ function Navbar() {
 
             <div className="texts">
                 <NavLink to='/Support'><span>{langData.yordam}</span></NavLink>
-                <NavLink to='/AdminRegisterPage'><span>{langData.buyurtma}</span></NavLink>
+                <NavLink to='/ServicesPage'><span>{langData.services}</span></NavLink>
             </div>
 
             <div className="buttons">

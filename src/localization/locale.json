@@ -31,7 +31,14 @@
         "chiqish": "Chiqish",
         "profil": "Profil",
         "bosh_vaqtlar": "Bo‘sh vaqtlar",
-        "vaqt_yoq": "Hali vaqt qo‘shilmagan"
+        "vaqt_yoq": "Hali vaqt qo‘shilmagan",
+        "saqlash": "Saqlash",
+        "tahrirlash": "Tahrirlash",
+        "barcha_xizmatlar": "Barcha xizmatlar",
+        "statistika": "Statistika",
+        "jami_xizmatlar": "Jami xizmatlar",
+        "ortalacha_narx": "O‘rtacha narx",
+        "services":"Xizmatlar"
     },
     "en": {
         "yordam": "Support",
@@ -65,7 +72,14 @@
         "profil": "Profile",
         "chiqish": "Log out",
         "bosh_vaqtlar": "Свободное время",
-        "vaqt_yoq": "Время пока не добавлено"
+        "vaqt_yoq": "Время пока не добавлено",
+        "saqlash": "Save",
+        "tahrirlash": "Edit",
+        "barcha_xizmatlar": "All Services",
+        "statistika": "Statistics",
+        "jami_xizmatlar": "Total Services",
+        "ortalacha_narx": "Average Price",
+        "services": "Services"
     },
     "ru": {
         "yordam": "Помощь",

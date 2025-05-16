@@ -1,55 +1,90 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useParams } from "react-router-dom";
-import { doc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs } from "firebase/firestore";
-import { db } from "./firebase";
-import "./BookingPage.css";
+import React, { useState, useEffect, useMemo } from "react";
+import { collection, query, where, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
+import { db, auth } from "./firebase";
 import { useStoreState } from "../Redux/selector";
 import locale from "../localization/locale.json";
-import { auth } from "./firebase";
-
-
+import "./BookingPage.css";
 
 function BookingPage() {
-  const { id } = useParams();
-  const [service, setService] = useState(null);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const states = useStoreState();
   const langData = useMemo(() => locale[states.lang], [states.lang]);
 
+  const regions = [
+    "Namangan", "Andijon", "Farg'ona", "Toshkent", "Xorazm",
+    "Jizzax", "Qashqadaryo", "Surxandaryo", "Navoiy", "Samarqand",
+    "Buxoro", "Sirdaryo"
+  ];
+  const services = ["quruvchi", "beauty shop", "sartarosh", "santexnik"];
+
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedService, setSelectedService] = useState("");
+
+  const [admins, setAdmins] = useState([]);
+  const [selectedAdminId, setSelectedAdminId] = useState("");
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // Adminlar ro'yxatini va har bir adminning buyurtma sonini olish
   useEffect(() => {
-    const fetchService = async () => {
+    if (!selectedRegion || !selectedService) {
+      setAdmins([]);
+      setSelectedAdminId("");
+      return;
+    }
+
+    const fetchAdmins = async () => {
       try {
-        const docRef = doc(db, "services", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setService(docSnap.data());
-        } else {
-          console.log("Xizmat topilmadi");
+        const q = query(
+          collection(db, "users"),
+          where("role", "==", "admin"),
+          where("region", "==", selectedRegion),
+          where("service", "==", selectedService)
+        );
+        const querySnapshot = await getDocs(q);
+
+        const adminsData = [];
+
+        for (const docSnap of querySnapshot.docs) {
+          const adminData = docSnap.data();
+
+          // Har bir admin uchun buyurtma sonini olish
+          const bookingsQuery = query(
+            collection(db, "bookings"),
+            where("adminId", "==", docSnap.id)
+          );
+          const bookingsSnapshot = await getDocs(bookingsQuery);
+          const ordersCount = bookingsSnapshot.size;
+
+          adminsData.push({
+            id: docSnap.id,
+            number: adminData.number || "Noma'lum",
+            ordersCount: ordersCount,
+          });
         }
-      } catch (err) {
-        console.error("Xatolik:", err);
+
+        setAdmins(adminsData);
+
+        // Agar faqat bitta admin bo‘lsa, uni avtomatik tanlash
+        if (adminsData.length === 1) {
+          setSelectedAdminId(adminsData[0].id);
+        } else {
+          setSelectedAdminId("");
+        }
+      } catch (error) {
+        console.error("Adminlarni olishda xatolik:", error);
       }
     };
-    fetchService();
-  }, [id]);
 
+    fetchAdmins();
+  }, [selectedRegion, selectedService]);
 
-  useEffect(() => {
-    const fetchTimes = async () => {
-      const q = query(collection(db, "serviceTimes"), where("serviceId", "==", id));
-      const querySnapshot = await getDocs(q);
-      const timeList = [];
-      querySnapshot.forEach(doc => {
-        timeList.push(doc.data().timeSlot);
-      });
-    };
-
-    if (id) fetchTimes();
-  }, [id]);
-
+  // Buyurtma berish
   const handleBooking = async () => {
-    if (!name || !phone) return alert("Iltimos, barcha maydonlarni to‘ldiring");
+    if (!name || !phone || !selectedRegion || !selectedService || !selectedAdminId) {
+      alert("Iltimos, barcha maydonlarni to‘ldiring va adminni tanlang");
+      return;
+    }
 
     const user = auth.currentUser;
     if (!user) {
@@ -62,49 +97,75 @@ function BookingPage() {
         userId: user.uid,
         name,
         phone,
-        serviceId: id,
-        serviceName: service?.name || "",
-        workplace: service?.workplace || "",
-        location: service?.location || "",
-        status: "active", // status qo‘shiladi
+        adminId: selectedAdminId,
+        region: selectedRegion,
+        service: selectedService,
+        status: "active",
         createdAt: serverTimestamp(),
       });
 
       alert("Buyurtma muvaffaqiyatli yuborildi!");
-      setName(""); setPhone("");
-    } catch (err) {
-      console.error("Xatolik:", err);
+      setName("");
+      setPhone("");
+      setSelectedRegion("");
+      setSelectedService("");
+      setAdmins([]);
+      setSelectedAdminId("");
+    } catch (error) {
+      console.error("Buyurtma berishda xatolik:", error);
       alert("Buyurtma yuborishda xatolik yuz berdi");
     }
   };
 
   return (
-    <div className='BookingPage'>
-      <div className="booking">
-        <h1>{langData.buyurtma}</h1>
+    <div className="BookingPage">
+      <h1>{langData.buyurtma}</h1>
 
-        {service && (
-          <div className="service-details">
-            <h2>{service.name}</h2>
-            <p><strong>{langData.narx}:</strong> {service.price} so‘m</p>
-            <p><strong>{langData.vaqt}:</strong> {service.duration} daqiqa</p>
-            <p><strong>{langData.place}</strong> {service.workplace}</p>
-            <p><strong>{langData.joylashuv}</strong> {service.location}</p>
-          </div>
-        )}
+      <label>
+        Viloyat tanlang:
+        <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value)}>
+          <option value="">-- Viloyat --</option>
+          {regions.map(region => (
+            <option key={region} value={region}>{region}</option>
+          ))}
+        </select>
+      </label>
 
-        <div className="inputs">
-          <label>
-            {langData.ism}
-            <input value={name} onChange={e => setName(e.target.value)} type="text" />
-          </label>
-          <label>
-            {langData.telefon}
-            <input value={phone} onChange={e => setPhone(e.target.value)} type="text" />
-          </label>
-          <button onClick={handleBooking}>{langData.buyurtma}</button>
-        </div>
-      </div>
+      <label>
+        Xizmat tanlang:
+        <select value={selectedService} onChange={e => setSelectedService(e.target.value)}>
+          <option value="">-- Xizmat --</option>
+          {services.map(service => (
+            <option key={service} value={service}>{service}</option>
+          ))}
+        </select>
+      </label>
+
+      {admins.length > 0 && (
+        <label>
+          Admin tanlang:
+          <select value={selectedAdminId} onChange={e => setSelectedAdminId(e.target.value)}>
+            <option value="">-- Adminni tanlang --</option>
+            {admins.map(admin => (
+              <option key={admin.id} value={admin.id}>
+                {admin.number} - Buyurtmalar soni: {admin.ordersCount}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+
+      <label>
+        {langData.ism}:
+        <input type="text" value={name} onChange={e => setName(e.target.value)} />
+      </label>
+
+      <label>
+        {langData.telefon}:
+        <input type="text" value={phone} onChange={e => setPhone(e.target.value)} />
+      </label>
+
+      <button onClick={handleBooking}>{langData.buyurtma}</button>
     </div>
   );
 }

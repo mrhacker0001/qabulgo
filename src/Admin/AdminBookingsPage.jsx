@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { collection, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../Components/firebase';
 import { useStoreState } from "../Redux/selector";
+import { auth } from '../Components/firebase';
 
 import locale from "../localization/locale.json";
 import './AdminBookingsPage.css';
@@ -16,11 +17,13 @@ function AdminBookingsPage() {
 
   useEffect(() => {
     const fetchBookings = async () => {
+      const currentAdmin = auth.currentUser;
+      if (!currentAdmin) return;
+
       const snapshot = await getDocs(collection(db, "bookings"));
-      const bookingsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+      const bookingsData = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(booking => booking.adminId === currentAdmin.uid); // 🟡 Faqat shu admin uchun
 
       setBookings(bookingsData);
 
@@ -39,6 +42,7 @@ function AdminBookingsPage() {
 
     fetchBookings();
   }, []);
+
 
   const handleDelete = async (id) => {
     const confirm = window.confirm("Haqiqatan ham o‘chirmoqchimisiz?");
@@ -77,14 +81,6 @@ function AdminBookingsPage() {
     <div className="AdminBookingsPage">
       <h2>{langData.barcha_buyurtmalar}</h2>
 
-      <label className="filter-checkbox">
-        <input
-          type="checkbox"
-          checked={filterToday}
-          onChange={() => setFilterToday(!filterToday)}
-        />
-        {langData.faqat_bugun}
-      </label>
 
       {filteredBookings.length === 0 ? (
         <p>{langData.buyurtmalar_yoq}</p>
@@ -95,7 +91,6 @@ function AdminBookingsPage() {
               <th>#</th>
               <th>{langData.ism}</th>
               <th>{langData.telefon}</th>
-              <th>{langData.vaqti}</th>
               <th>{langData.xizmat}</th>
               <th>{langData.manzil}</th>
               <th>Status</th>
@@ -110,7 +105,6 @@ function AdminBookingsPage() {
                   <td>{index + 1}</td>
                   <td>{booking.name}</td>
                   <td>{booking.phone}</td>
-                  <td>{booking.time}</td>
                   <td>{service?.name || '...'}</td>
                   <td>{service?.workplace}, {service?.location}</td>
                   <td>
