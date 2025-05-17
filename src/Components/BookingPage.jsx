@@ -25,7 +25,6 @@ function BookingPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
-  // Adminlar ro'yxatini va har bir adminning buyurtma sonini olish
   useEffect(() => {
     if (!selectedRegion || !selectedService) {
       setAdmins([]);
@@ -48,7 +47,6 @@ function BookingPage() {
         for (const docSnap of querySnapshot.docs) {
           const adminData = docSnap.data();
 
-          // Har bir admin uchun buyurtma sonini olish
           const bookingsQuery = query(
             collection(db, "bookings"),
             where("adminId", "==", docSnap.id)
@@ -65,7 +63,6 @@ function BookingPage() {
 
         setAdmins(adminsData);
 
-        // Agar faqat bitta admin bo‘lsa, uni avtomatik tanlash
         if (adminsData.length === 1) {
           setSelectedAdminId(adminsData[0].id);
         } else {
@@ -79,7 +76,6 @@ function BookingPage() {
     fetchAdmins();
   }, [selectedRegion, selectedService]);
 
-  // Buyurtma berish
   const handleBooking = async () => {
     if (!name || !phone || !selectedRegion || !selectedService || !selectedAdminId) {
       alert("Iltimos, barcha maydonlarni to‘ldiring va adminni tanlang");
@@ -119,53 +115,68 @@ function BookingPage() {
 
   return (
     <div className="BookingPage">
-      <h1>{langData.buyurtma}</h1>
+      <div className="booking-page">
+        <h1>{langData.buyurtma}</h1>
 
-      <label>
-        Viloyat tanlang:
-        <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value)}>
-          <option value="">-- Viloyat --</option>
-          {regions.map(region => (
-            <option key={region} value={region}>{region}</option>
-          ))}
-        </select>
-      </label>
-
-      <label>
-        Xizmat tanlang:
-        <select value={selectedService} onChange={e => setSelectedService(e.target.value)}>
-          <option value="">-- Xizmat --</option>
-          {services.map(service => (
-            <option key={service} value={service}>{service}</option>
-          ))}
-        </select>
-      </label>
-
-      {admins.length > 0 && (
         <label>
-          Admin tanlang:
-          <select value={selectedAdminId} onChange={e => setSelectedAdminId(e.target.value)}>
-            <option value="">-- Adminni tanlang --</option>
-            {admins.map(admin => (
-              <option key={admin.id} value={admin.id}>
-                {admin.number} - Buyurtmalar soni: {admin.ordersCount}
-              </option>
+          Viloyat tanlang:
+          <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value)}>
+            <option value="">-- Viloyat --</option>
+            {regions.map(region => (
+              <option key={region} value={region}>{region}</option>
             ))}
           </select>
         </label>
-      )}
 
-      <label>
-        {langData.ism}:
-        <input type="text" value={name} onChange={e => setName(e.target.value)} />
-      </label>
+        <label>
+          Xizmat tanlang:
+          <select value={selectedService} onChange={e => setSelectedService(e.target.value)}>
+            <option value="">-- Xizmat --</option>
+            {services.map(service => (
+              <option key={service} value={service}>{service}</option>
+            ))}
+          </select>
+        </label>
 
-      <label>
-        {langData.telefon}:
-        <input type="text" value={phone} onChange={e => setPhone(e.target.value)} />
-      </label>
 
-      <button onClick={handleBooking}>{langData.buyurtma}</button>
+
+        <label>
+          {langData.ism}:
+          <input type="text" value={name} onChange={e => setName(e.target.value)} />
+        </label>
+
+        <label>
+          {langData.telefon}:
+          <input type="text" value={phone} onChange={e => setPhone(e.target.value)} />
+        </label>
+
+        <button onClick={handleBooking}>{langData.buyurtma}</button>
+      </div>
+      <div className="admin-profiles">
+        {admins.length > 0 && (
+          admins.map(admin => (
+
+            <div value={selectedAdminId} onChange={e => setSelectedAdminId(e.target.value)} className="admin-profile">
+              <h1>Adminlar haqida ma'lumot:</h1>
+              <span>Telefon raqam: {admin.number}</span>
+              <p>Bajargan buyurtmalar soni: {admin.ordersCount} dona</p>
+
+            </div>
+          ))
+
+          // <label>
+          //   Admin tanlang:
+          //   <select value={selectedAdminId} onChange={e => setSelectedAdminId(e.target.value)}>
+          //     <option value="">-- Adminni tanlang --</option>
+          //     {admins.map(admin => (
+          //       <option key={admin.id} value={admin.id}>
+          //         {admin.number} - Buyurtmalar soni: {admin.ordersCount}
+          //       </option>
+          //     ))}
+          //   </select>
+          // </label>
+        )}
+      </div>
     </div>
   );
 }

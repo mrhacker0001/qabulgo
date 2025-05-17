@@ -54,9 +54,8 @@ function ProfilePage() {
                 {activeBookings.length === 0 ? <p>Hozircha yo'q</p> :
                     activeBookings.map((booking, index) => (
                         <div key={index} className="booking-card">
-                            <p>Xizmat: {booking.serviceName}</p>
-                            <p>Band qilingan vaqt: {booking.time}</p>
-                            <p>Band qilingan joy: {booking.workplace}</p>
+                            <p>Xizmat: {booking.service}</p>
+                            <p>Band qilingan joy: {booking.region}</p>
                             <br />
                             <p><strong>Buyurtma berilgan sana:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
                         </div>
@@ -67,9 +66,8 @@ function ProfilePage() {
                 {completedBookings.length === 0 ? <p>Hozircha yo'q</p> :
                     completedBookings.map((booking, index) => (
                         <div key={index} className="booking-card completed">
-                            <p>Xizmat: {booking.serviceName}</p>
-                            <p>Band qilingan vaqt: {booking.time}</p>
-                            <p>Band qilingan joy: {booking.workplace}</p>
+                            <p>Xizmat: {booking.service}</p>
+                            <p>Band qilingan joy: {booking.region}</p>
                             <br />
                             <p><strong>Sana:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
                         </div>
