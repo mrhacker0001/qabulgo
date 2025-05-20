@@ -14,3 +14,8 @@
 .booking-card.completed {
     background: #e0ffe0;
 }
+
+.booking-card.cancelled {
+    background-color: #ffe5e5;
+    border: 1px solid red;
+}

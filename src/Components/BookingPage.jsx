@@ -24,6 +24,7 @@ function BookingPage() {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [adress, setAdress] = useState("");
 
   useEffect(() => {
     if (!selectedRegion || !selectedService) {
@@ -47,6 +48,7 @@ function BookingPage() {
         for (const docSnap of querySnapshot.docs) {
           const adminData = docSnap.data();
 
+          // Adminning buyurtmalarini olish
           const bookingsQuery = query(
             collection(db, "bookings"),
             where("adminId", "==", docSnap.id)
@@ -54,10 +56,24 @@ function BookingPage() {
           const bookingsSnapshot = await getDocs(bookingsQuery);
           const ordersCount = bookingsSnapshot.size;
 
+          // Baholarni yig'ish
+          let totalRating = 0;
+          let ratingCount = 0;
+
+          bookingsSnapshot.forEach((bookingDoc) => {
+            const bookingData = bookingDoc.data();
+            if (bookingData.rating !== undefined && bookingData.rating !== null) {
+              totalRating += bookingData.rating;
+              ratingCount++;
+            }
+          });
+
           adminsData.push({
             id: docSnap.id,
             number: adminData.number || "Noma'lum",
-            ordersCount: ordersCount,
+            ordersCount,
+            rating: totalRating,
+            ratingCount,
           });
         }
 
@@ -77,7 +93,7 @@ function BookingPage() {
   }, [selectedRegion, selectedService]);
 
   const handleBooking = async () => {
-    if (!name || !phone || !selectedRegion || !selectedService || !selectedAdminId) {
+    if (!name || !phone || !adress || !selectedRegion || !selectedService || !selectedAdminId) {
       alert("Iltimos, barcha maydonlarni to‘ldiring va adminni tanlang");
       return;
     }
@@ -93,6 +109,7 @@ function BookingPage() {
         userId: user.uid,
         name,
         phone,
+        adress,
         adminId: selectedAdminId,
         region: selectedRegion,
         service: selectedService,
@@ -103,6 +120,7 @@ function BookingPage() {
       alert("Buyurtma muvaffaqiyatli yuborildi!");
       setName("");
       setPhone("");
+      setAdress("");
       setSelectedRegion("");
       setSelectedService("");
       setAdmins([]);
@@ -138,8 +156,6 @@ function BookingPage() {
           </select>
         </label>
 
-
-
         <label>
           {langData.ism}:
           <input type="text" value={name} onChange={e => setName(e.target.value)} />
@@ -150,33 +166,41 @@ function BookingPage() {
           <input type="text" value={phone} onChange={e => setPhone(e.target.value)} />
         </label>
 
+        <label>
+          {langData.adress}:
+          <input type="text" value={adress} onChange={e => setAdress(e.target.value)} />
+        </label>
+
         <button onClick={handleBooking}>{langData.buyurtma}</button>
       </div>
-      <div className="admin-profiles">
-        {admins.length > 0 && (
-          admins.map(admin => (
 
-            <div value={selectedAdminId} onChange={e => setSelectedAdminId(e.target.value)} className="admin-profile">
-              <h1>Adminlar haqida ma'lumot:</h1>
-              <span>Telefon raqam: {admin.number}</span>
-              <p>Bajargan buyurtmalar soni: {admin.ordersCount} dona</p>
-
-            </div>
-          ))
-
-          // <label>
-          //   Admin tanlang:
-          //   <select value={selectedAdminId} onChange={e => setSelectedAdminId(e.target.value)}>
-          //     <option value="">-- Adminni tanlang --</option>
-          //     {admins.map(admin => (
-          //       <option key={admin.id} value={admin.id}>
-          //         {admin.number} - Buyurtmalar soni: {admin.ordersCount}
-          //       </option>
-          //     ))}
-          //   </select>
-          // </label>
-        )}
+      <div className="admin-profiles-page">
+        <h1>Adminlar ro‘yxati</h1>
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Telefon raqam</th>
+              <th>Bajargan buyurtmalar soni</th>
+              <th>O‘rtacha baho</th>
+            </tr>
+          </thead>
+          <tbody>
+            {admins.map((admin, index) => {
+              const avgRating = admin.ratingCount > 0 ? (admin.rating / admin.ratingCount).toFixed(1) : "0.0";
+              return (
+                <tr key={admin.id}>
+                  <td>{index + 1}</td>
+                  <td>{admin.number}</td>
+                  <td>{admin.ordersCount} dona</td>
+                  <td>{avgRating} ⭐</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
+
     </div>
   );
 }

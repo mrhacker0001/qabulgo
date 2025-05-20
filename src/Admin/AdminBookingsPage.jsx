@@ -1,46 +1,57 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { collection, getDocs, doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../Components/firebase';
+import {
+  collection, getDocs, doc, getDoc, deleteDoc, updateDoc
+} from 'firebase/firestore';
+import { db, auth } from '../Components/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import { useStoreState } from "../Redux/selector";
-import { auth } from '../Components/firebase';
-
 import locale from "../localization/locale.json";
 import './AdminBookingsPage.css';
 
 function AdminBookingsPage() {
   const [bookings, setBookings] = useState([]);
   const [servicesMap, setServicesMap] = useState({});
-  const [filterToday, setFilterToday] = useState(false);
+  const [currentFilter, setCurrentFilter] = useState('today');
+  const [currentAdminId, setCurrentAdminId] = useState(null);
 
   const states = useStoreState();
   const langData = useMemo(() => locale[states.lang], [states.lang]);
 
   useEffect(() => {
-    const fetchBookings = async () => {
-      const currentAdmin = auth.currentUser;
-      if (!currentAdmin) return;
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setCurrentAdminId(user.uid);
+        try {
+          const snapshot = await getDocs(collection(db, "bookings"));
+          const bookingsData = snapshot.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter(booking => booking.adminId === user.uid);
 
-      const snapshot = await getDocs(collection(db, "bookings"));
-      const bookingsData = snapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(booking => booking.adminId === currentAdmin.uid); // 🟡 Faqat shu admin uchun
+          setBookings(bookingsData);
 
-      setBookings(bookingsData);
+          const serviceIds = [...new Set(bookingsData.map(b => b.serviceId).filter(id => !!id))];
+          const serviceMap = {};
 
-      const serviceIds = [...new Set(bookingsData.map(b => b.serviceId))];
-      const serviceMap = {};
+          for (const id of serviceIds) {
+            if (!id) continue;
+            try {
+              const serviceDoc = await getDoc(doc(db, "services", id));
+              if (serviceDoc.exists()) {
+                serviceMap[id] = serviceDoc.data();
+              }
+            } catch (err) {
+              console.error("Xizmatni olishda xatolik:", err);
+            }
+          }
 
-      for (const id of serviceIds) {
-        const serviceDoc = await getDoc(doc(db, "services", id));
-        if (serviceDoc.exists()) {
-          serviceMap[id] = serviceDoc.data();
+          setServicesMap(serviceMap);
+        } catch (err) {
+          console.error("Bookinglarni olishda xatolik:", err);
         }
       }
+    });
 
-      setServicesMap(serviceMap);
-    };
-
-    fetchBookings();
+    return () => unsubscribe();
   }, []);
 
 
@@ -69,18 +80,44 @@ function AdminBookingsPage() {
     }
   };
 
-
   const filteredBookings = useMemo(() => {
-    if (!filterToday) return bookings;
-
     const today = new Date().toISOString().split("T")[0];
-    return bookings.filter(booking => booking.time?.includes(today));
-  }, [bookings, filterToday]);
+    switch (currentFilter) {
+      case 'today':
+        return bookings.filter(booking => booking.time?.includes(today));
+      case 'completed':
+        return bookings.filter(b => b.status === "completed");
+      case 'cancelled':
+        return bookings.filter(b => b.status === "cancelled");
+      default:
+        return bookings;
+    }
+  }, [bookings, currentFilter]);
+
+  const totalStats = useMemo(() => ({
+    all: bookings.length,
+    today: bookings.filter(b => b.time?.includes(new Date().toISOString().split("T")[0])).length,
+    completed: bookings.filter(b => b.status === "completed").length,
+    cancelled: bookings.filter(b => b.status === "cancelled").length,
+  }), [bookings]);
 
   return (
     <div className="AdminBookingsPage">
       <h2>{langData.barcha_buyurtmalar}</h2>
 
+      <div className="filter-buttons">
+        <button onClick={() => setCurrentFilter('today')}>{langData.bugungi}</button>
+        <button onClick={() => setCurrentFilter('all')}>{langData.barchasi}</button>
+        <button onClick={() => setCurrentFilter('completed')}>✅ {langData.tugatildi}</button>
+        <button onClick={() => setCurrentFilter('cancelled')}>❌ {langData.bekor_qilingan}</button>
+      </div>
+
+      <div className="booking-stats">
+        <p>{langData.barchasi}: {totalStats.all}</p>
+        <p>{langData.bugungi}: {totalStats.today}</p>
+        <p>{langData.tugatildi}: {totalStats.completed}</p>
+        <p>{langData.bekor_qilingan}: {totalStats.cancelled}</p>
+      </div>
 
       {filteredBookings.length === 0 ? (
         <p>{langData.buyurtmalar_yoq}</p>
@@ -105,16 +142,18 @@ function AdminBookingsPage() {
                   <td>{index + 1}</td>
                   <td>{booking.name}</td>
                   <td>{booking.phone}</td>
-                  <td>{service?.name || '...'}</td>
-                  <td>{service?.workplace}, {service?.location}</td>
+                  <td>{booking?.service || langData.xizmat_topilmadi}</td>
+                  <td>{booking ? `${booking.adress}` : '...'}</td>
                   <td>
                     <span className={`status ${booking.status || ''}`}>
                       {booking.status || '...'}
                     </span>
-                    <div className="status-buttons">
-                      <button onClick={() => handleStatusChange(booking.id, "completed")}>✅ finished</button>
-                      <button onClick={() => handleStatusChange(booking.id, "cancelled")}>❌ cancelled</button>
-                    </div>
+                    {booking.status !== 'completed' && booking.status !== 'cancelled' && (
+                      <div className="status-buttons">
+                        <button onClick={() => handleStatusChange(booking.id, "completed")}>✅ finished</button>
+                        <button onClick={() => handleStatusChange(booking.id, "cancelled")}>❌ cancelled</button>
+                      </div>
+                    )}
                   </td>
                   <td>
                     <button onClick={() => handleDelete(booking.id)}>
@@ -125,7 +164,6 @@ function AdminBookingsPage() {
               );
             })}
           </tbody>
-
         </table>
       )}
     </div>

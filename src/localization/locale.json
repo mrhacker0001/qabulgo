@@ -38,7 +38,13 @@
         "statistika": "Statistika",
         "jami_xizmatlar": "Jami xizmatlar",
         "ortalacha_narx": "O‘rtacha narx",
-        "services":"Xizmatlar"
+        "services": "Xizmatlar",
+        "bugungi": "Bugungi",
+        "barchasi": "Barchasi",
+        "tugatildi": "Tugatildi",
+        "bekor_qilingan": "Bekor qilingan",
+        "xizmat_topilmadi": "Xizmat topilmadi",
+        "adress": "Manzilingizni kiriting"
     },
     "en": {
         "yordam": "Support",
@@ -65,7 +71,7 @@
         "faqat_bugun": "Today's orders only",
         "admin_royxat": "Admin registration",
         "admin_kirish": "Admin login",
-        "email": "Email address",
+        "email": "Email ",
         "parol": "Password",
         "royxatdan_otish": "Register",
         "kirish": "Login",
@@ -79,7 +85,13 @@
         "statistika": "Statistics",
         "jami_xizmatlar": "Total Services",
         "ortalacha_narx": "Average Price",
-        "services": "Services"
+        "services": "Services",
+        "bugungi": "Today",
+        "barchasi": "All",
+        "tugatildi": "Completed",
+        "bekor_qilingan": "Cancelled",
+        "xizmat_topilmadi": "Service not found",
+        "adress": "Adress"
     },
     "ru": {
         "yordam": "Помощь",
@@ -113,6 +125,12 @@
         "chiqish": "Выйти",
         "profil": "Профиль",
         "bosh_vaqtlar": "Available Times",
-        "vaqt_yoq": "No times added yet"
+        "vaqt_yoq": "No times added yet",
+        "bugungi": "Сегодня",
+        "barchasi": "Все",
+        "tugatildi": "Завершено",
+        "bekor_qilingan": "Отменено",
+        "xizmat_topilmadi": "Услуга не найдена",
+        "adress": "Адрес"
     }
 }

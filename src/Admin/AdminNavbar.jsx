@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../Components/firebase';
 import { NavLink } from 'react-router-dom'
 
@@ -23,7 +23,7 @@ function AdminNavbar({ setIsAdmin }) {
             <ul>
                 <li><NavLink to="/AdminServicesPage">Xizmatlar</NavLink></li>
                 <li><NavLink to="/AdminBookingsPage">Buyurtmalar</NavLink></li>
-                <li><NavLink to="/AdminDashboardPage">Bajarilgan buyurtmalar</NavLink></li>
+                <li><NavLink to="/DashboardPage">Bajarilgan buyurtmalar</NavLink></li>
                 <li><button onClick={handleLogout}>Chiqish</button></li>
             </ul>
         </nav>
