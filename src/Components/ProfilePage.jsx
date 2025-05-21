@@ -50,11 +50,6 @@ function ProfilePage() {
     }, [user]);
 
     if (!user) return <p>Iltimos, tizimga kiring.</p>;
-
-    if (!user) {
-        return <p>Iltimos, tizimga kiring.</p>;
-    }
-
     return (
         <div className='ProfilePage'>
             <h2>Profil</h2>
@@ -67,7 +62,8 @@ function ProfilePage() {
                         <p>Xizmat: {booking.service}</p>
                         <p>Band qilingan joy: {booking.region}</p>
                         <br />
-                        <p><strong>Buyurtma berilgan sana:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
+                        <p><strong>Sana:</strong> {booking.createdAt ? booking.createdAt.toDate().toLocaleString() : "Noma’lum sana"}</p>
+
 
                         <button
                             className="cancel-button"
@@ -129,45 +125,46 @@ function ProfilePage() {
                         )}
 
                         {/* Sharh yozish va saqlash */}
-                        <div style={{ marginTop: "10px" }}>
-                            <label>Sharh yozing:</label>
-                            <textarea
-                                rows={3}
-                                style={{ width: "100%", resize: "vertical" }}
-                                value={reviews[booking.id] || ""}
-                                onChange={(e) => setReviews(prev => ({ ...prev, [booking.id]: e.target.value }))}
-                                placeholder="Sharhingizni yozing..."
-                            />
-                            <button
-                                onClick={async () => {
-                                    try {
-                                        const reviewText = reviews[booking.id]?.trim() || "";
-                                        if (!reviewText) {
-                                            alert("Iltimos, sharh kiriting!");
-                                            return;
+                        {!booking.review && (
+                            <div style={{ marginTop: "10px" }}>
+                                <label>Sharh yozing:</label>
+                                <textarea
+                                    rows={3}
+                                    style={{ width: "100%", resize: "vertical" }}
+                                    value={reviews[booking.id] || ""}
+                                    onChange={(e) => setReviews(prev => ({ ...prev, [booking.id]: e.target.value }))}
+                                    placeholder="Sharhingizni yozing..."
+                                />
+                                <button
+                                    onClick={async () => {
+                                        try {
+                                            const reviewText = reviews[booking.id]?.trim() || "";
+                                            if (!reviewText) {
+                                                alert("Iltimos, sharh kiriting!");
+                                                return;
+                                            }
+                                            const bookingRef = doc(db, "bookings", booking.id);
+                                            await updateDoc(bookingRef, { review: reviewText });
+
+                                            const updated = [...completedBookings];
+                                            updated[index].review = reviewText;
+                                            setCompletedBookings(updated);
+
+                                            setReviews(prev => ({ ...prev, [booking.id]: "" }));
+
+                                            alert("Sharh muvaffaqiyatli saqlandi!");
+                                        } catch (err) {
+                                            console.error("Sharh saqlashda xatolik:", err);
+                                            alert("Sharhni saqlab bo‘lmadi");
                                         }
-                                        const bookingRef = doc(db, "bookings", booking.id);
-                                        await updateDoc(bookingRef, { review: reviewText });
+                                    }}
+                                    style={{ marginTop: "5px" }}
+                                >
+                                    Sharhni saqlash
+                                </button>
+                            </div>
+                        )}
 
-                                        // Local state update
-                                        const updated = [...completedBookings];
-                                        updated[index].review = reviewText;
-                                        setCompletedBookings(updated);
-
-                                        // Sharh yozish uchun inputni tozalaymiz
-                                        setReviews(prev => ({ ...prev, [booking.id]: "" }));
-
-                                        alert("Sharh muvaffaqiyatli saqlandi!");
-                                    } catch (err) {
-                                        console.error("Sharh saqlashda xatolik:", err);
-                                        alert("Sharhni saqlab bo‘lmadi");
-                                    }
-                                }}
-                                style={{ marginTop: "5px" }}
-                            >
-                                Sharhni saqlash
-                            </button>
-                        </div>
 
                         {/* Saqlangan sharhni ko'rsatamiz */}
                         {booking.review && (

@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userDoc = await getDoc(doc(db, "admins", user.uid));
         if (userDoc.exists() && userDoc.data().role === "admin") {
           setIsAdmin(true);
         } else {

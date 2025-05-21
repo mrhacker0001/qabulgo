@@ -61,3 +61,16 @@
     color: red;
     font-weight: bold;
 }
+
+.filter-buttons {
+    width: 100dvw;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 3dvh;
+    margin: 4dvh;
+}
+
+.filter-buttons button {
+    width: 10dvw;
+}

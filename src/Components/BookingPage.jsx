@@ -36,7 +36,7 @@ function BookingPage() {
     const fetchAdmins = async () => {
       try {
         const q = query(
-          collection(db, "users"),
+          collection(db, "admins"),
           where("role", "==", "admin"),
           where("region", "==", selectedRegion),
           where("service", "==", selectedService)

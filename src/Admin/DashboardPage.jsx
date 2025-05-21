@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../Components/firebase";
+import "./DashboardPage.css";
+
 
 function DashboardPage() {
   const [ratings, setRatings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [adminInfo, setAdminInfo] = useState(null);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const fetchAdminInfoAndRatings = async () => {
@@ -16,41 +19,54 @@ function DashboardPage() {
       }
 
       try {
-        // Adminni uid bo'yicha topamiz (agar kerak bo'lsa)
-        // Siz hozir bookings dan to'g'ridan-to'g'ri adminId ga user.uid ga teng deb qidiryapsiz
-        // Agar adminId user.uid bilan to'g'ri keladigan bo'lsa, shunday qiling:
+        // 1. Admin ma'lumotlarini "admins" kolleksiyasidan olish
+        const adminDocRef = doc(db, "admins", user.uid);
+        const adminDocSnap = await getDoc(adminDocRef);
 
-        // Admin haqida ma'lumot olish uchun users kolleksiyasidan so'rov:
-        const adminQuery = query(collection(db, "bookings"), where("adminId", "==", user.uid));
-        const adminSnapshot = await getDocs(adminQuery);
+        if (!adminDocSnap.exists()) {
+          setAdminInfo(null);
+          setLoading(false);
+          return;
+        }
 
-        if (!adminSnapshot.empty) {
-          const adminDoc = adminSnapshot.docs[0];
-          setAdminInfo(adminDoc.data());
+        const adminData = adminDocSnap.data();
+        setAdminInfo({
+          name: adminData.name || "Noma'lum",
+          phone: adminData.number || "Noma'lum",
+        });
 
-          const adminDocId = adminDoc.id; // Admin hujjat IDsi
+        // 2. Adminning bookinglari bo‘yicha reytinglarni olish
+        const bookingsQuery = query(collection(db, "bookings"), where("adminId", "==", user.uid));
+        const bookingsSnapshot = await getDocs(bookingsQuery);
 
-          // bookings kolleksiyasidan adminId bo'yicha ratinglarni olamiz
-          const ratingsQuery = query(collection(db, "bookings"), where("adminId", "==", adminDocId));
-          const ratingsSnapshot = await getDocs(ratingsQuery);
-
+        if (!bookingsSnapshot.empty) {
           const ratingsList = [];
-          ratingsSnapshot.forEach(doc => {
+          let totalRating = 0;
+
+          bookingsSnapshot.forEach(doc => {
             const data = doc.data();
             if (data.rating) {
+              const ratingNumber = Number(data.rating);
+              totalRating += ratingNumber;
+
               ratingsList.push({
                 id: doc.id,
-                rating: data.rating,
+                rating: ratingNumber,
+                review: data.review || "",
                 userName: data.name || "Foydalanuvchi",
                 createdAt: data.createdAt ? data.createdAt.toDate().toLocaleString() : "Noma'lum sana",
               });
             }
           });
 
+          if (ratingsList.length > 0) {
+            setAverageRating((totalRating / ratingsList.length).toFixed(1));
+          }
+
+          ratingsList.sort((a, b) => b.rating - a.rating);
           setRatings(ratingsList);
-        } else {
-          setAdminInfo(null);
         }
+
       } catch (error) {
         console.error("Xatolik yuz berdi:", error);
       }
@@ -67,16 +83,28 @@ function DashboardPage() {
 
   return (
     <div className="DashboardPage" style={{ padding: "20px" }}>
-      <h2>Admin: {adminInfo.name || adminInfo.phone || "Noma'lum admin"}</h2>
+      <h2>Admin: {adminInfo.name}</h2>
+      <p>Telefon: {adminInfo.phone}</p>
+
+      <div style={{ marginTop: "10px", marginBottom: "20px" }}>
+        <h3>Baholar statistikasi:</h3>
+        <p>Baholar soni: <b>{ratings.length}</b></p>
+        <p>O‘rtacha baho: <b>{averageRating} / 5</b></p>
+      </div>
+
       <h3>Foydalanuvchilar baholari:</h3>
       {ratings.length === 0 ? (
         <p>Baholar mavjud emas</p>
       ) : (
-        <ul>
+        <ul style={{ padding: 0, listStyleType: "none" }}>
           {ratings.map(r => (
             <li key={r.id} style={{ marginBottom: "15px", borderBottom: "1px solid #ccc", paddingBottom: "10px" }}>
-              <b>{r.userName}:</b> <br />
-              Bahosi: <b>{r.rating} / 5</b> <br />
+              <b>{r.userName}</b> - <span>{r.rating} / 5</span><br />
+              {r.review && (
+                <div style={{ marginTop: "5px" }}>
+                  <i>"{r.review}"</i>
+                </div>
+              )}
               <small style={{ color: "gray" }}>{r.createdAt}</small>
             </li>
           ))}

@@ -44,7 +44,10 @@
         "tugatildi": "Tugatildi",
         "bekor_qilingan": "Bekor qilingan",
         "xizmat_topilmadi": "Xizmat topilmadi",
-        "adress": "Manzilingizni kiriting"
+        "adress": "Manzilingizni kiriting",
+        "bookings": "Buyurtmalar",
+        "completed": "Bajarilgan buyurtmalar",
+        "logout": "Chiqish"
     },
     "en": {
         "yordam": "Support",
@@ -91,7 +94,10 @@
         "tugatildi": "Completed",
         "bekor_qilingan": "Cancelled",
         "xizmat_topilmadi": "Service not found",
-        "adress": "Adress"
+        "adress": "Adress",
+        "bookings": "Bookings",
+        "completed": "Completed bookings",
+        "logout": "Logout"
     },
     "ru": {
         "yordam": "Помощь",
@@ -131,6 +137,10 @@
         "tugatildi": "Завершено",
         "bekor_qilingan": "Отменено",
         "xizmat_topilmadi": "Услуга не найдена",
-        "adress": "Адрес"
+        "adress": "Адрес",
+        "services": "Услуги",
+        "bookings": "Бронирования",
+        "completed": "Выполненные заказы",
+        "logout": "Выход"
     }
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../Components/firebase';
+import "./AdminLoginPage.css"
 
 function AdminRegisterPage() {
     const [secret, setSecret] = useState('');
@@ -11,6 +12,7 @@ function AdminRegisterPage() {
     const [region, setRegion] = useState('');
     const [number, setNumber] = useState('');
     const [service, setService] = useState('');
+    const [name, setName] = useState('');
 
     const handleSecretSubmit = (e) => {
         e.preventDefault();
@@ -28,12 +30,13 @@ function AdminRegisterPage() {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            await setDoc(doc(db, 'users', user.uid), {
+            await setDoc(doc(db, 'admins', user.uid), {
                 email: user.email,
                 role: 'admin',
-                region,   // Adminning viloyati
-                service,  // Adminning xizmat turi
-                number,   // Telefon raqami
+                region,
+                service,
+                number,
+                name
             });
 
             alert("Admin muvaffaqiyatli ro‘yxatdan o‘tdi");
@@ -44,6 +47,7 @@ function AdminRegisterPage() {
             setRegion('');
             setNumber('');
             setService('');
+            setName('');
 
         } catch (error) {
             console.error("Xatolik:", error);
@@ -56,8 +60,7 @@ function AdminRegisterPage() {
         { name: "beauty shop" },
         { name: "sartarosh" },
         { name: "santexnik" },
-
-    ]
+    ];
 
     const regionname = [
         { name: "Namangan" },
@@ -72,10 +75,10 @@ function AdminRegisterPage() {
         { name: "Samarqand" },
         { name: "Buxoro" },
         { name: "Sirdaryo" }
-    ]
+    ];
 
     return (
-        <div className="AdminRegisterPage">
+        <div className="AdminRegisterPage" style={{ padding: "20px" }}>
             {!accessGranted ? (
                 <form onSubmit={handleSecretSubmit}>
                     <h3>Maxfiy kodni kiriting</h3>
@@ -91,6 +94,14 @@ function AdminRegisterPage() {
             ) : (
                 <form onSubmit={registerAdmin}>
                     <h2>Admin ro‘yxatdan o‘tish</h2>
+
+                    <input
+                        type="text"
+                        placeholder="Ismingiz"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
                     <input
                         type="email"
                         placeholder="Email"

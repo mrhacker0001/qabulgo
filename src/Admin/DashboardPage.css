@@ -1,0 +1,67 @@
+.DashboardPage {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.DashboardPage h2 {
+    font-size: 28px;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.DashboardPage p {
+    font-size: 16px;
+    margin: 4px 0;
+}
+
+.rating-stats {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background-color: #f5f5f5;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.ratings-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.ratings-list li {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+    margin-bottom: 10px;
+}
+
+.ratings-list li:last-child {
+    border-bottom: none;
+}
+
+.ratings-list b {
+    font-size: 17px;
+    color: #222;
+}
+
+.ratings-list span {
+    font-weight: bold;
+    color: #f39c12;
+    /* Gold color for rating */
+}
+
+.ratings-list i {
+    display: block;
+    color: #555;
+    margin-top: 5px;
+}
+
+.ratings-list small {
+    color: gray;
+    font-size: 13px;
+    display: block;
+    margin-top: 5px;
+}
