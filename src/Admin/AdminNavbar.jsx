@@ -31,7 +31,7 @@ function AdminNavbar({ setIsAdmin }) {
                 <li><NavLink to="/AdminServicesPage">{langData?.services || "Xizmatlar"}</NavLink></li>
                 <li><NavLink to="/AdminBookingsPage">{langData?.bookings || "Buyurtmalar"}</NavLink></li>
                 <li><NavLink to="/DashboardPage">{langData?.completed || "Bajarilgan buyurtmalar"}</NavLink></li>
-                <li><button onClick={handleLogout}>{langData?.logout || "Chiqish"}</button></li>
+                <button onClick={handleLogout}>{langData?.logout || "Chiqish"}</button>
             </ul>
             <select
                 className='language'

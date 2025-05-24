@@ -1,11 +1,13 @@
 .BookingPage {
     width: 100dvw;
-    height: 100dvh;
+    height: auto;
+    padding: 10dvh 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #dad3d3;
+    gap: 5dvh;
 }
 
 .booking-page {
@@ -34,13 +36,14 @@
 .booking-page label select,
 .booking-page label input {
     width: 20dvw;
-    height: 4dvh;
+    height: 5dvh;
     background: none;
     border: none;
     outline: none;
     border-radius: 10px;
     border: 2px solid #333333;
     padding-left: 1dvw;
+    font-size: 14px;
 }
 
 .booking-page button {

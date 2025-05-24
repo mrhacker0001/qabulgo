@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../Components/firebase";
 import "./DashboardPage.css";
+import { setLang } from "../Redux/lang";
+import { useStoreState } from "../Redux/selector";
+import locale from "../localization/locale.json";
+
+
+
 
 
 function DashboardPage() {
@@ -9,6 +15,9 @@ function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [adminInfo, setAdminInfo] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
+  const states = useStoreState(); // <-- Hookni ichkariga o‘tkazdik
+  const langData = useMemo(() => locale[states.lang], [states.lang]);
+
 
   useEffect(() => {
     const fetchAdminInfoAndRatings = async () => {
@@ -77,24 +86,24 @@ function DashboardPage() {
     fetchAdminInfoAndRatings();
   }, []);
 
-  if (loading) return <div>Yuklanmoqda...</div>;
+  if (loading) return <div>{langData.loading}</div>;
 
-  if (!adminInfo) return <div>Admin ma'lumotlari topilmadi</div>;
+  if (!adminInfo) return <div>{langData.noinfo}</div>;
 
   return (
     <div className="DashboardPage" style={{ padding: "20px" }}>
-      <h2>Admin: {adminInfo.name}</h2>
-      <p>Telefon: {adminInfo.phone}</p>
+      <h2>{langData.admin}: {adminInfo.name}</h2>
+      <p>{langData.telefon}: {adminInfo.phone}</p>
 
       <div style={{ marginTop: "10px", marginBottom: "20px" }}>
-        <h3>Baholar statistikasi:</h3>
-        <p>Baholar soni: <b>{ratings.length}</b></p>
-        <p>O‘rtacha baho: <b>{averageRating} / 5</b></p>
+        <h3>{langData.static}:</h3>
+        <p>{langData.count}: <b>{ratings.length}</b></p>
+        <p>{langData.average}: <b>{averageRating} / 5</b></p>
       </div>
 
-      <h3>Foydalanuvchilar baholari:</h3>
+      <h3>{langData.countm}:</h3>
       {ratings.length === 0 ? (
-        <p>Baholar mavjud emas</p>
+        <p>{langData.norating}</p>
       ) : (
         <ul style={{ padding: 0, listStyleType: "none" }}>
           {ratings.map(r => (

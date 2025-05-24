@@ -7,17 +7,21 @@ import hairdresser from "./icons/barber.png"
 import builder from "./icons/wall.png"
 import { useStoreState } from "../Redux/selector";
 import locale from "../localization/locale.json";
+import { useNavigate } from 'react-router-dom';
+
 
 function HomePage() {
 
     const states = useStoreState();
     const langData = useMemo(() => locale[states.lang], [states.lang]);
+    const navigate = useNavigate();  // <-- To‘g‘ri chaqirish!
+
 
     const services = [
-        { img: makeup, name: "Beauty shop" },
-        { img: plumber, name: "Santexnik" },
-        { img: hairdresser, name: "Sartarosh" },
-        { img: builder, name: "Quruvchi" }
+        { id: "beauty-shop", img: makeup, name: "Beauty shop" },
+        { id: "plumber", img: plumber, name: "Santexnik" },
+        { id: "hairdresser", img: hairdresser, name: "Sartarosh" },
+        { id: "builder", img: builder, name: "Quruvchi" }
     ]
 
     return (
@@ -35,7 +39,7 @@ function HomePage() {
                     <div className="service-cart" key={service.id}>
                         <img src={service.img} alt="" />
                         <h2>{service.name}</h2>
-                        <button >
+                        <button onClick={() => navigate(`/BookingPage/${service.id}`)}>
                             {langData.buyurtma}
                         </button>
                     </div>

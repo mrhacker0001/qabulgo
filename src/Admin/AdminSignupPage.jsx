@@ -9,17 +9,19 @@ import { useNavigate } from "react-router-dom";
 function AdminSignupPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
     const states = useStoreState();
     const langData = useMemo(() => locale[states.lang], [states.lang]);
     const navigate = useNavigate();
 
     const handleSignup = async () => {
-        if (!email || !password) return alert("Iltimos, barcha maydonlarni to‘ldiring");
+        if (!email || !password || !phone) return alert("Iltimos, barcha maydonlarni to‘ldiring");
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            await createUserWithEmailAndPassword(auth, email, password, phone);
             alert("Ro‘yxatdan muvaffaqiyatli o‘tdingiz!");
             setEmail('');
             setPassword('');
+            setPhone('');
             navigate("/");
         } catch (error) {
             console.error("Ro‘yxatdan o‘tishda xatolik:", error);
@@ -42,6 +44,12 @@ function AdminSignupPage() {
                     placeholder={langData.parol}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder={langData.telefon}
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
                 />
                 <button onClick={handleSignup}>{langData.royxatdan_otish}</button>
             </div>

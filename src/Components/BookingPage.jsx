@@ -137,9 +137,9 @@ function BookingPage() {
         <h1>{langData.buyurtma}</h1>
 
         <label>
-          Viloyat tanlang:
+          {langData.selectregion}:
           <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value)}>
-            <option value="">-- Viloyat --</option>
+            <option value="">-- {langData.region} --</option>
             {regions.map(region => (
               <option key={region} value={region}>{region}</option>
             ))}
@@ -147,9 +147,9 @@ function BookingPage() {
         </label>
 
         <label>
-          Xizmat tanlang:
+          {langData.selectservice}:
           <select value={selectedService} onChange={e => setSelectedService(e.target.value)}>
-            <option value="">-- Xizmat --</option>
+            <option value="">-- {langData.nom} --</option>
             {services.map(service => (
               <option key={service} value={service}>{service}</option>
             ))}
@@ -175,14 +175,14 @@ function BookingPage() {
       </div>
 
       <div className="admin-profiles-page">
-        <h1>Adminlar ro‘yxati</h1>
+        <h1>{langData.admins}</h1>
         <table className="admin-table">
           <thead>
             <tr>
               <th>#</th>
-              <th>Telefon raqam</th>
-              <th>Bajargan buyurtmalar soni</th>
-              <th>O‘rtacha baho</th>
+              <th>{langData.telefon}</th>
+              <th>{langData.completed}</th>
+              <th>{langData.average}</th>
             </tr>
           </thead>
           <tbody>
@@ -192,7 +192,7 @@ function BookingPage() {
                 <tr key={admin.id}>
                   <td>{index + 1}</td>
                   <td>{admin.number}</td>
-                  <td>{admin.ordersCount} dona</td>
+                  <td>{admin.ordersCount}</td>
                   <td>{avgRating} ⭐</td>
                 </tr>
               );

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../Components/firebase";
 import { collection, query, where, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from "../Components/firebase";
 import "./ProfilePage.css";
+import { useStoreState } from "../Redux/selector";
+import locale from "../localization/locale.json";
+
 
 function ProfilePage() {
     const [user] = useAuthState(auth);
@@ -11,6 +14,8 @@ function ProfilePage() {
     const [completedBookings, setCompletedBookings] = useState([]);
     const [cancelledBookings, setCancelledBookings] = useState([]);
     const [reviews, setReviews] = useState({});
+    const states = useStoreState();
+    const langData = useMemo(() => locale[states.lang], [states.lang]);
 
     useEffect(() => {
         if (user) {
@@ -49,20 +54,20 @@ function ProfilePage() {
         }
     }, [user]);
 
-    if (!user) return <p>Iltimos, tizimga kiring.</p>;
+    if (!user) return <p>{langData.please}</p>;
     return (
         <div className='ProfilePage'>
-            <h2>Profil</h2>
-            <p><strong>Email:</strong> {user.email}</p>
+            <h2>{langData.profil}</h2>
+            <p><strong>{langData.email}:</strong> {user.email}</p>
 
             <div className="bookings">
-                <h3>🔹 Hozirgi buyurtmalar</h3>
+                <h3>🔹 {langData.bookings}</h3>
                 {activeBookings.map((booking, index) => (
                     <div key={index} className="booking-card">
-                        <p>Xizmat: {booking.service}</p>
-                        <p>Band qilingan joy: {booking.region}</p>
+                        <p>{langData.xizmat}: {booking.service}</p>
+                        <p>{langData.booked}: {booking.region}</p>
                         <br />
-                        <p><strong>Sana:</strong> {booking.createdAt ? booking.createdAt.toDate().toLocaleString() : "Noma’lum sana"}</p>
+                        <p><strong>{langData.date}:</strong> {booking.createdAt ? booking.createdAt.toDate().toLocaleString() : "Noma’lum sana"}</p>
 
 
                         <button
@@ -80,25 +85,25 @@ function ProfilePage() {
                                 }
                             }}
                         >
-                            ❌ Bekor qilish
+                            ❌ {langData.cancel}
                         </button>
                     </div>
                 ))}
 
 
-                <h3>🔸 O‘tgan buyurtmalar</h3>
+                <h3>🔸 {langData.pastbooks}</h3>
                 {completedBookings.map((booking, index) => (
                     <div key={booking.id} className="booking-card completed">
-                        <p>Xizmat: {booking.service}</p>
-                        <p>Band qilingan joy: {booking.region}</p>
+                        <p>{langData.xizmat}: {booking.service}</p>
+                        <p>{langData.booked}: {booking.region}</p>
                         <br />
-                        <p><strong>Sana:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
+                        <p><strong>{langData.date}:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
 
                         {booking.rating ? (
-                            <p>⭐ Baho: {booking.rating}/5</p>
+                            <p>⭐ {langData.rate}: {booking.rating}/5</p>
                         ) : (
                             <div>
-                                <label>Baho bering: </label>
+                                <label>{langData.giverate}: </label>
                                 <select
                                     onChange={async (e) => {
                                         const value = parseInt(e.target.value);
@@ -114,12 +119,12 @@ function ProfilePage() {
                                         }
                                     }}
                                 >
-                                    <option value="">Tanlang</option>
-                                    <option value="1">1 - Juda yomon</option>
-                                    <option value="2">2 - Yomon</option>
-                                    <option value="3">3 - O‘rtacha</option>
-                                    <option value="4">4 - Yaxshi</option>
-                                    <option value="5">5 - A’lo</option>
+                                    <option value="">{langData.select}</option>
+                                    <option value="1">1 - {langData.first}</option>
+                                    <option value="2">2 - {langData.second}</option>
+                                    <option value="3">3 - {langData.third}</option>
+                                    <option value="4">4 - {langData.forth}</option>
+                                    <option value="5">5 - {langData.fifth}</option>
                                 </select>
                             </div>
                         )}
@@ -127,7 +132,7 @@ function ProfilePage() {
                         {/* Sharh yozish va saqlash */}
                         {!booking.review && (
                             <div style={{ marginTop: "10px" }}>
-                                <label>Sharh yozing:</label>
+                                <label>{langData.comment}:</label>
                                 <textarea
                                     rows={3}
                                     style={{ width: "100%", resize: "vertical" }}
@@ -160,7 +165,7 @@ function ProfilePage() {
                                     }}
                                     style={{ marginTop: "5px" }}
                                 >
-                                    Sharhni saqlash
+                                    {langData.save}
                                 </button>
                             </div>
                         )}
@@ -169,7 +174,7 @@ function ProfilePage() {
                         {/* Saqlangan sharhni ko'rsatamiz */}
                         {booking.review && (
                             <p style={{ marginTop: "10px", fontStyle: "italic", color: "#555" }}>
-                                <strong>Sharh:</strong> {booking.review}
+                                <strong>{langData.review}:</strong> {booking.review}
                             </p>
                         )}
                     </div>
@@ -178,14 +183,14 @@ function ProfilePage() {
 
 
 
-                <h3 style={{ color: "red" }}>❌ Bekor qilingan buyurtmalar</h3>
-                {cancelledBookings.length === 0 ? <p>Hozircha yo'q</p> :
+                <h3 style={{ color: "red" }}>❌ {langData.bekor_qilingan}</h3>
+                {cancelledBookings.length === 0 ? <p>{langData.no}</p> :
                     cancelledBookings.map((booking, index) => (
                         <div key={index} className="booking-card cancelled">
-                            <p>Xizmat: {booking.service}</p>
-                            <p>Band qilingan joy: {booking.region}</p>
+                            <p>{langData.xizmat}: {booking.service}</p>
+                            <p>{langData.booked}: {booking.region}</p>
                             <br />
-                            <p><strong>Bekor qilingan sana:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
+                            <p><strong>{langData.cancelleddate}:</strong> {booking.createdAt?.toDate().toLocaleString()}</p>
                         </div>
                     ))
                 }
