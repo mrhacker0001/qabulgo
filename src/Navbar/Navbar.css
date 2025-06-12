@@ -8,6 +8,10 @@
     padding: 0 1dvw;
 }
 
+.navbar-media {
+    display: none;
+}
+
 .Navbar img {
     width: 6dvw;
     border-radius: 5px;
@@ -47,7 +51,7 @@
     border: 1px solid #fff;
     color: #fff;
     font-family: sans-serif;
-    font-size: 12px;
+    font-size: 10px;
     cursor: pointer;
 }
 
@@ -67,4 +71,244 @@
     cursor: pointer;
     font-size: 14px;
     padding: 0;
+}
+
+@media (max-width:1430px) {
+    .buttons select {
+        width: 4dvw;
+        height: 4dvh;
+        font-size: 14px;
+    }
+
+    .buttons button {
+        width: 10dvw;
+    }
+}
+
+@media (max-width:1050px) {
+    .buttons select {
+        width: 4dvw;
+        height: 3dvh;
+        font-size: 12px;
+    }
+
+    .texts span {
+        font-size: 16px;
+    }
+
+    .Navbar img {
+        width: 8dvw;
+    }
+
+    .buttons button {
+        width: 12dvw;
+        height: 4dvh;
+    }
+}
+
+@media (max-width:970px) {
+    .buttons button {
+        width: 14dvw;
+    }
+
+    .buttons select {
+        width: 5dvw;
+        height: 3.5dvh;
+        font-size: 10px;
+    }
+
+    .texts span {
+        font-size: 14px;
+    }
+
+    .Navbar img {
+        width: 10dvw;
+    }
+
+
+
+}
+
+@media (max-width:750px) {
+    .buttons select {
+        width: 6dvw;
+        height: 3.5dvh;
+        font-size: 10px;
+    }
+
+    .Navbar img {
+        width: 12dvw;
+    }
+
+    .buttons button {
+        width: 16dvw;
+    }
+}
+
+@media (max-width:670px) {
+    .Navbar {
+        display: none;
+    }
+
+    .navbar-media {
+        display: block;
+        width: 100dvw;
+        height: 8dvh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgb(44, 44, 44);
+        padding: 0 1dvw;
+    }
+
+    .logo {
+        width: 13dvw;
+        border-radius: 5px;
+    }
+
+    .language-media {
+        width: 6dvw;
+        height: 3dvh;
+        background: none;
+        border: 1px solid #fff;
+        border-radius: 6px;
+        color: #fff;
+        font-family: sans-serif;
+        cursor: pointer;
+        font-size: 10px;
+        padding: 0;
+    }
+
+    .menu-icon {
+        font-size: 18px;
+        border: none;
+        background: none;
+    }
+
+    .search-panel-media {
+        display: flex;
+        align-items: center;
+        gap: 2dvw;
+    }
+
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4dvh;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(30px);
+        width: 40dvw;
+        height: 40dvh;
+        position: fixed;
+        top: 8dvh;
+        right: -43dvw;
+        z-index: 100;
+        transition: right 0.4s ease-in-out;
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
+        box-shadow: -4px 0 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-menu.open {
+        right: 0;
+    }
+
+    .media-texts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4dvh;
+    }
+
+    .media-texts a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+    }
+
+    .mobile-menu button {
+        width: 24dvw;
+        height: 4dvh;
+        border-radius: 9px;
+        background: none;
+        border: none;
+        border: 1px solid #fff;
+        color: #fff;
+        font-family: sans-serif;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .mobile-menu button a {
+        text-decoration: none;
+        color: #fff;
+    }
+}
+
+@media (max-width:600px) {
+    .language-media {
+        width: 8dvw;
+    }
+
+    .logo {
+        width: 16dvw;
+        border-radius: 5px;
+    }
+
+    .mobile-menu {
+        width: 50dvw;
+        right: -50dvw;
+    }
+
+    .mobile-menu button {
+        width: 30dvw;
+        font-size: 10px;
+    }
+}
+
+@media (max-width:470px) {
+    .language-media {
+        width: 10dvw;
+        height: 3dvh;
+    }
+
+    .logo {
+        width: 18dvw;
+        border-radius: 5px;
+    }
+
+    .mobile-menu {
+        width: 60dvw;
+        right: -60dvw;
+        height: 40dvh;
+    }
+
+    .mobile-menu button {
+        width: 30dvw;
+        font-size: 10px;
+    }
+
+    .media-texts {
+        font-size: 16px;
+    }
+}
+
+
+@media (max-width:380px) {
+    .mobile-menu {
+        width: 70dvw;
+        right: -70dvw;
+        height: 30dvh;
+    }
+
+    .mobile-menu button {
+        width: 40dvw;
+        font-size: 10px;
+    }
+
+    .media-texts {
+        font-size: 13px;
+    }
 }
