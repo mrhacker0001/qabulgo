@@ -1,5 +1,11 @@
 .AdminBookingsPage {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5dvh;
+    width: 100dvw;
+    height: auto;
+    overflow: hidden;
+    padding: 3dvw;
 }
 
 .filter-checkbox {
@@ -11,13 +17,14 @@
 }
 
 .bookings-table {
-    width: 100%;
+    width: auto;
     border-collapse: collapse;
     margin-top: 20px;
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.05);
+    padding: 2dvw;
 }
 
 .bookings-table th,
@@ -25,6 +32,12 @@
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
+}
+
+.bookings-table table {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
 .bookings-table th {
@@ -72,5 +85,127 @@
 }
 
 .filter-buttons button {
-    width: 10dvw;
+    width: 8dvw;
+    height: 4dvh;
+    background: none;
+    border: none;
+    border: 2px solid #b7b3b3;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+
+@media (max-width:1200px) {
+    .filter-buttons button {
+        width: 11dvw;
+    }
+}
+
+@media (max-width:950px) {
+    .filter-buttons button {
+        width: 15dvw;
+    }
+
+    .bookings-table {
+        overflow: scroll;
+    }
+}
+
+@media (max-width:800px) {
+
+
+    .bookings-table {
+        overflow: scroll;
+    }
+
+    .bookings-table table {
+        width: 100dvw;
+    }
+}
+
+@media (max-width:760px) {
+    .filter-buttons button {
+        width: 16dvw;
+        font-size: 12px;
+    }
+
+
+}
+
+@media (max-width:605px) {
+    .AdminBookingsPage {
+        padding: 2dvw;
+    }
+
+    .filter-buttons {
+        padding: 0;
+    }
+
+    .filter-buttons button {
+        width: 15dvw;
+        height: 3dvh;
+        font-size: 10px;
+    }
+
+
+}
+
+@media (max-width:520px) {
+    .AdminBookingsPage {
+        padding: 1dvw;
+    }
+
+    .filter-buttons {
+        padding: 0;
+        gap: 2dvw;
+    }
+
+    .filter-buttons button {
+        width: 17dvw;
+        height: 3dvh;
+        font-size: 10px;
+    }
+}
+
+@media (max-width:470px) {
+    .AdminBookingsPage {
+        padding: 1dvw;
+    }
+
+    .filter-buttons {
+        width: 90%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4dvw;
+    }
+
+    .filter-buttons button {
+        width: 25dvw;
+        height: 4dvh;
+        font-size: 12px;
+    }
+}
+
+@media (max-width:430px) {
+    .filter-buttons button {
+        width: 30dvw;
+        height: 4dvh;
+        font-size: 12px;
+    }
+}
+
+@media (max-width:350px) {
+    .AdminBookingsPage {
+        padding: 1dvw;
+    }
+
+    .filter-buttons {
+        gap: 5dvw;
+    }
+
+    .filter-buttons button {
+        width: 30dvw;
+        height: 4dvh;
+        font-size: 12px;
+    }
 }

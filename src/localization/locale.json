@@ -231,6 +231,10 @@
         "save": "Сохранить комментарий",
         "review": "Комментарий",
         "no": "Еще нет.",
-        "cancelleddate":"Дата отмены"
+        "cancelleddate": "Дата отмены",
+        "statistika": "Статистика",
+        "jami_xizmatlar": "Всего услуг",
+        "ortalacha_narx": "Средняя цена",
+        "tahrirlash": "Редактировать"
     }
 }

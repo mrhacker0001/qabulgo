@@ -43,7 +43,7 @@
     border-radius: 10px;
     border: 2px solid #333333;
     padding-left: 1dvw;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .booking-page button {
@@ -77,4 +77,184 @@
 
 .admin-table tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+
+@media (max-width:1400px) {
+    .booking-page {
+        width: 40dvw;
+    }
+
+    .booking-page label select,
+    .booking-page label input {
+        width: 25dvw;
+    }
+
+    .booking-page button {
+        width: 20dvw;
+        height: 5dvh;
+    }
+}
+
+
+@media (max-width:1120px) {
+    .booking-page {
+        width: 50dvw;
+    }
+
+    .booking-page label select,
+    .booking-page label input {
+        width: 30dvw;
+    }
+
+    .booking-page button {
+        width: 20dvw;
+        height: 5dvh;
+    }
+}
+
+@media (max-width:920px) {
+    .booking-page {
+        width: 60dvw;
+    }
+
+    .booking-page label select,
+    .booking-page label input {
+        width: 40dvw;
+    }
+
+    .booking-page button {
+        width: 26dvw;
+        height: 5dvh;
+    }
+}
+
+@media (max-width:700px) {
+    .booking-page {
+        width: 60dvw;
+        height: 65dvh;
+    }
+
+    .booking-page label select,
+    .booking-page label input {
+        width: 40dvw;
+        height: 3.5dvh;
+        font-size: 14px;
+    }
+
+    .booking-page label {
+        font-size: 14px;
+    }
+
+    .booking-page button {
+        width: 26dvw;
+        height: 4dvh;
+        font-size: 14px;
+    }
+
+    .booking-page h1 {
+        font-size: 22px;
+    }
+
+    .admin-profiles-page h1 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width:520px) {
+    .booking-page {
+        width: 70dvw;
+        height: 60dvh;
+    }
+
+    .booking-page label select,
+    .booking-page label input {
+        width: 45dvw;
+        height: 3dvh;
+        font-size: 14px;
+    }
+
+    .booking-page label {
+        font-size: 14px;
+    }
+
+    .booking-page button {
+        width: 26dvw;
+        height: 4dvh;
+        font-size: 14px;
+    }
+
+    .booking-page h1 {
+        font-size: 22px;
+    }
+
+    .admin-table {
+        width: 90dvw;
+    }
+
+    .admin-table th {
+        font-size: 14px;
+    }
+
+}
+
+@media (max-width:450px) {
+    .booking-page {
+        width: 80dvw;
+        height: 60dvh;
+    }
+
+    .booking-page label select,
+    .booking-page label input {
+        width: 55dvw;
+        height: 3.5dvh;
+        font-size: 14px;
+    }
+
+    .booking-page label {
+        font-size: 14px;
+    }
+
+    .booking-page button {
+        width: 35dvw;
+        height: 4dvh;
+        font-size: 14px;
+    }
+
+    .booking-page h1 {
+        font-size: 22px;
+    }
+
+    .admin-table th {
+        font-size: 11px;
+    }
+}
+
+@media (max-width:400px) {
+    .booking-page {
+        width: 80dvw;
+        height: 66dvh;
+        gap: 2dvh;
+    }
+
+    .booking-page label select,
+    .booking-page label input {
+        width: 60dvw;
+        height: 4dvh;
+        font-size: 14px;
+    }
+
+    .booking-page label {
+        font-size: 14px;
+    }
+
+    .booking-page button {
+        width: 35dvw;
+        height: 4dvh;
+        font-size: 14px;
+    }
+
+    .booking-page h1 {
+        font-size: 22px;
+    }
 }

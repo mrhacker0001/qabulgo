@@ -122,49 +122,51 @@ function AdminBookingsPage() {
       {filteredBookings.length === 0 ? (
         <p>{langData.buyurtmalar_yoq}</p>
       ) : (
-        <table className="bookings-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>{langData.ism}</th>
-              <th>{langData.telefon}</th>
-              <th>{langData.xizmat}</th>
-              <th>{langData.manzil}</th>
-              <th>Status</th>
-              <th>{langData.ochirish}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredBookings.map((booking, index) => {
-              const service = servicesMap[booking.serviceId];
-              return (
-                <tr key={booking.id}>
-                  <td>{index + 1}</td>
-                  <td>{booking.name}</td>
-                  <td>{booking.phone}</td>
-                  <td>{booking?.service || langData.xizmat_topilmadi}</td>
-                  <td>{booking ? `${booking.adress}` : '...'}</td>
-                  <td>
-                    <span className={`status ${booking.status || ''}`}>
-                      {booking.status || '...'}
-                    </span>
-                    {booking.status !== 'completed' && booking.status !== 'cancelled' && (
-                      <div className="status-buttons">
-                        <button onClick={() => handleStatusChange(booking.id, "completed")}>✅ finished</button>
-                        <button onClick={() => handleStatusChange(booking.id, "cancelled")}>❌ cancelled</button>
-                      </div>
-                    )}
-                  </td>
-                  <td>
-                    <button onClick={() => handleDelete(booking.id)}>
-                      {langData.ochirish}
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className='           '>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>{langData.ism}</th>
+                <th>{langData.telefon}</th>
+                <th>{langData.xizmat}</th>
+                <th>{langData.manzil}</th>
+                <th>Status</th>
+                <th>{langData.ochirish}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredBookings.map((booking, index) => {
+                const service = servicesMap[booking.serviceId];
+                return (
+                  <tr key={booking.id}>
+                    <td>{index + 1}</td>
+                    <td>{booking.name}</td>
+                    <td>{booking.phone}</td>
+                    <td>{booking?.service || langData.xizmat_topilmadi}</td>
+                    <td>{booking ? `${booking.adress}` : '...'}</td>
+                    <td>
+                      <span className={`status ${booking.status || ''}`}>
+                        {booking.status || '...'}
+                      </span>
+                      {booking.status !== 'completed' && booking.status !== 'cancelled' && (
+                        <div className="status-buttons">
+                          <button onClick={() => handleStatusChange(booking.id, "completed")}>✅ finished</button>
+                          <button onClick={() => handleStatusChange(booking.id, "cancelled")}>❌ cancelled</button>
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      <button onClick={() => handleDelete(booking.id)}>
+                        {langData.ochirish}
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

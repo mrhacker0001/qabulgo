@@ -262,6 +262,20 @@
         right: -50dvw;
     }
 
+    .mobile-menu ul li a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+    }
+
+    .mobile-menu ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3dvh;
+    }
+
     .mobile-menu button {
         width: 30dvw;
         font-size: 10px;
@@ -310,5 +324,9 @@
 
     .media-texts {
         font-size: 13px;
+    }
+
+    .language-media {
+        width: 12dvw;
     }
 }

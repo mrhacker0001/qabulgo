@@ -63,3 +63,29 @@
     font-size: 16px;
     cursor: pointer;
 }
+
+@media (max-width:800px) {
+    .first-page {
+        height: 30dvh;
+    }
+}
+
+@media (max-width:600px) {
+    .first-page {
+        display: flex;
+        flex-direction: column;
+        height: 40dvh;
+    }
+
+    .first-page img {
+        width: 55dvw;
+    }
+}
+
+@media (max-width:600px) {
+
+
+    .first-page img {
+        width: 80dvw;
+    }
+}

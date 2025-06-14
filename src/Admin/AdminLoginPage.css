@@ -8,15 +8,137 @@
     justify-content: center;
 }
 
-.form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+.sign-form {
+    width: 30dvw;
+    height: 70dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 5dvh;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ffffff;
+    padding: 3dvw 0;
+    border-radius: 20px;
 }
 
-.form {
-    width: 30px;
-    height: 70dvh;
-    border: 2px solid #333333;
-    border-radius: 20px;
+.sign-form h2 {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.sign-form input {
+    width: 65%;
+    height: 5dvh;
+    border-radius: 5px;
+    outline: none;
+    background: none;
+    border: none;
+    border: 2px solid #ffffff;
+    padding-left: 2dvw;
+}
+
+.sign-form button {
+    width: 50%;
+    height: 5dvh;
+    border-radius: 5px;
+    background: none;
+    border: none;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: sans-serif;
+
+}
+
+@media (max-width:1250px) {
+    .sign-form {
+        width: 35dvw;
+    }
+
+    .sign-form button {
+        font-size: 16px;
+    }
+}
+
+@media (max-width:1080px) {
+    .sign-form {
+        width: 40dvw;
+    }
+
+    .sign-form button {
+        font-size: 14px;
+    }
+
+    .sign-form h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width:900px) {
+    .sign-form {
+        width: 50dvw;
+    }
+
+    .sign-form button {
+        font-size: 14px;
+    }
+
+    .sign-form h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width:730px) {
+    .sign-form {
+        width: 55dvw;
+        height: 60dvh;
+    }
+
+    .sign-form button {
+        font-size: 14px;
+    }
+
+    .sign-form h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width:580px) {
+    .sign-form {
+        width: 70dvw;
+        height: 60dvh;
+    }
+
+    .sign-form button {
+        font-size: 14px;
+        width: 60%;
+    }
+
+    .sign-form h2 {
+        font-size: 24px;
+    }
+
+    .sign-form input {
+        width: 75%;
+    }
+}
+
+@media (max-width:580px) {
+    .sign-form {
+        width: 76dvw;
+        height: 60dvh;
+    }
+
+    .sign-form button {
+        font-size: 14px;
+        width: 65%;
+    }
+
+    .sign-form h2 {
+        font-size: 20px;
+    }
+
+    .sign-form input {
+        width: 75%;
+    }
 }

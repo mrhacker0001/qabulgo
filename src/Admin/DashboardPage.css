@@ -65,3 +65,13 @@
     display: block;
     margin-top: 5px;
 }
+
+@media (max-width:900px) {
+    .DashboardPage h2 {
+        font-size: 20px;
+    }
+
+    .DashboardPage p {
+        font-size: 16px;
+    }
+}

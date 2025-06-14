@@ -6,6 +6,10 @@
     justify-content: space-between;
 }
 
+.navbar-media {
+    display: none;
+}
+
 .admin-navbar ul {
     width: auto;
     height: auto;
@@ -41,4 +45,96 @@
     border-radius: 10px;
     border: 2px solid #ffffff;
     color: #ffffff;
+}
+
+@media (max-width:1350px) {
+    .admin-navbar select {
+        width: 4dvw;
+    }
+
+    .admin-navbar ul {
+        width: auto;
+        gap: 4dvw;
+    }
+
+    .admin-navbar ul button {
+        width: 10dvw;
+    }
+}
+
+@media (max-width:1050px) {
+    .admin-navbar select {
+        width: 6dvw;
+    }
+
+    .admin-navbar ul {
+        width: auto;
+        gap: 5dvw;
+    }
+
+    .admin-navbar ul button {
+        width: 10dvw;
+        font-size: 14px;
+    }
+
+    .admin-navbar ul li {
+        width: 10dvw;
+        font-size: 12px;
+    }
+}
+
+@media (max-width:700px) {
+    .admin-navbar select {
+        width: 8dvw;
+        font-size: 14px;
+    }
+
+    .admin-navbar ul {
+        width: auto;
+        gap: 8dvw;
+    }
+
+    .admin-navbar ul button {
+        width: 13dvw;
+        font-size: 12px;
+    }
+
+    .admin-navbar ul li {
+        width: 10dvw;
+        font-size: 8px;
+    }
+}
+
+@media (max-width:550px) {
+    .admin-navbar select {
+        width: 10dvw;
+        font-size: 13px;
+    }
+
+    .admin-navbar ul {
+        width: auto;
+        gap: 10dvw;
+    }
+
+    .admin-navbar ul button {
+        width: 13dvw;
+        font-size: 12px;
+    }
+
+    .admin-navbar ul li {
+        width: 10dvw;
+        font-size: 8px;
+    }
+}
+
+@media (max-width:500px) {
+    .admin-navbar {
+        display: none;
+    }
+
+    .navbar-media {
+        display: block;
+        display: flex;
+        align-items: center;
+    }
 }

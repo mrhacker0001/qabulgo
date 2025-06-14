@@ -30,7 +30,7 @@ function AdminLoginPage() {
 
   return (
     <div className="AdminLoginPage">
-      <div className="form">
+      <div className="sign-form">
         <h2>{langData.kirish}</h2>
 
         <input
